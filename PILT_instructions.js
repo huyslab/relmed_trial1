@@ -17,6 +17,15 @@ function prepare_PILT_instructions() {
         pages: () => {
 
             let pages = [
+<<<<<<< HEAD
+=======
+                ` <p>Welcome!</p>
+                <p>In this study, you'll play a few simple games of learning from trial and error.</p>
+                <p>Your goal in each game is to win as many coins as possible.</p>
+                <p>The games might feel a bit fast-paced because we're interested in your quick, intuitive judgments.</p>
+                <p>Let's start with the first game.</p>
+                `
+>>>>>>> 648e130 (overall attitude instructions)
             ];
 
             pages = pages.concat([
