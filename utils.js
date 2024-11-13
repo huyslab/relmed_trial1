@@ -94,7 +94,7 @@ const kick_out_warning = {
         `
         }
     ],
-    choices: ["space"],
+    choices: ["Space"],
     data: {
       trialphase: 'speed-accuracy'
     }
