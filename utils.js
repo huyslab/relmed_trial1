@@ -69,7 +69,7 @@ const pre_kick_out_warning = {
 const kick_out_warning = {
     type: jsPsychHtmlKeyboardResponse,
     conditional_function: function() {
-      if (jsPsych.data.get().last(1).select('n_warnings').values[0] >= window.maxWarnings) {
+      if (jsPsych.data.get().last(1).select('n_warnings').values[0] == window.maxWarnings) {
         return true;
       } else {
         return false;
@@ -88,17 +88,15 @@ const kick_out_warning = {
             }
         },
         {
-        stimulus: `<p>You may not be following the study instructions as intended, as you didn't respond more than 15 times.</p>
-            <p>Unfortunately, you cannot continue with this study.</p>
-            <p>If you believe this is a mistake, please email haoyang.lu@ucl.ac.uk, explaining the circumstances.</p>
-            <p>Please return this study on Prolific.</p>
-            <p>You may now close this tab.</p>
+        stimulus: `<p>You might be making taking a little too long to make your choices.</p>
+        <p>We're interested in your quick judgments, so please try to respond a little faster—even if it feels a bit less precise.</p>
+        <p>Press the space bar to continue.</p>
         `
         }
     ],
-    choices: ["NO_KEYS"],
+    choices: ["space"],
     data: {
-      trialphase: 'kick-out'
+      trialphase: 'speed-accuracy'
     }
 }
 
