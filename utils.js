@@ -188,7 +188,7 @@ function end_experiment() {
             window.removeEventListener('beforeunload', preventRefresh);
 
             // Redirect
-            window.location.replace("https://app.prolific.com/submissions/complete?cc=CQTRGXFP")
+            document.body.innerHTML += "<p>You may now close this window.</p>";
         }
     });
 }
