@@ -23,6 +23,7 @@ function prepare_PILT_instructions() {
                 <p>In this study, you'll play a few simple games of learning from trial and error.</p>
                 <p>Your goal in each game is to win as many coins as possible.</p>
                 <p>The games might feel a bit fast-paced because we're interested in your quick, intuitive judgments.</p>
+                <p>Since the games are about learning from trial and error, everyone is expected to make quite a few mistakes when they play.</p>
                 <p>Let's start with the first game.</p>
                 `
 >>>>>>> 648e130 (overall attitude instructions)
@@ -370,8 +371,15 @@ const WM_instructions = [
         type: jsPsychInstructions,
         css_classes: ['instructions'],
         pages: [
+<<<<<<< HEAD
             '<p>Next, you will return to the card choosing game.</p>\
                 <p>Your goal remains to add as much money as you can to your safe.</p>',
+=======
+            `<p>Welcome back!</p>
+            <p>Next, you will return to the card choosing game.</p>\
+                <p>Your goal remains to collect and keep from breaking as many high-value coins as you can.</p>
+                <p>As before, this game is a little fast-paced, and everyone is expected to make more than a few mistakes.</p>`,
+>>>>>>> 19f3e3e (welcome on eacht ask)
             `<p>This time, you will choose between three cards on every turn.<p>
             <p>In every triplet, one picture card will have only one pound and fifty pence coins behind it, while the other two cards will have only pennies.<p>
             <p>You can earn more by learning which is the better picture card in each triplet and choosing that card when you next see same triplet.</p>`,
