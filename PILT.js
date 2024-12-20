@@ -324,8 +324,6 @@ async function load_squences(session) {
         const structure = await response.json();
         const sess_structure = structure[session - 1].slice(0,3);
 
-        console.log(sess_structure);
-
         window.totalBlockNumber = sess_structure.length
 
         // Fetch post-PILT test sequences
@@ -336,7 +334,8 @@ async function load_squences(session) {
         }
 
         const test_structure = await test_response.json();
-        let test_sess_structure = test_structure[session - 1];
+
+        let test_sess_structure = [test_structure[session - 1][0].slice(0,5)];
 
         // Add folder to stimuli
         for (i=0; i<test_sess_structure.length; i++){
@@ -360,7 +359,7 @@ async function load_squences(session) {
         }
 
         // Add Pavlovaian test to the end of test strucutre
-        test_sess_structure = [pav_test_structure].concat(test_sess_structure);
+        // test_sess_structure = [pav_test_structure].concat(test_sess_structure);
 
         // Fetch WM structure
         const WM_response = await fetch('pilot7_WM.json');
