@@ -1,11 +1,7 @@
 // This files creates the jsPsych timeline for the reversal task block
 
 // Parameters
-<<<<<<< HEAD
-const rev_n_trials = 150; // N trials
-=======
 const rev_n_trials = 130; // N trials
->>>>>>> ead27a6 (shorten reversal)
 
 // Parse json sequence
 const reversal_timeline = JSON.parse(reversal_json);
