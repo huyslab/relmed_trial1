@@ -12,21 +12,11 @@ function prepare_PILT_instructions() {
 
     let inst =  [
         {
-        type: jsPsychInstructions,
-        css_classes: ['instructions'],
-        pages: () => {
+            type: jsPsychInstructions,
+            css_classes: ['instructions'],
+            pages: () => {
 
             let pages = [
-<<<<<<< HEAD
-=======
-                ` <p>Welcome!</p>
-                <p>In this study, you'll play a few simple games of learning from trial and error.</p>
-                <p>Your goal in each game is to win as many coins as possible.</p>
-                <p>The games might feel a bit fast-paced because we're interested in your quick, intuitive judgments.</p>
-                <p>Since the games are about learning from trial and error, everyone is expected to make quite a few mistakes when they play.</p>
-                <p>Let's start with the first game.</p>
-                `
->>>>>>> 648e130 (overall attitude instructions)
             ];
 
             pages = pages.concat([
@@ -39,17 +29,10 @@ function prepare_PILT_instructions() {
                 <td><img src='imgs/1penny.png' style='width:${small_coin_size}px; height:${small_coin_size}px;'></td></tr>
                 <tr><td>60x one pound coins</td><td>60x fifty pence coins</td><td>60x one penny coins</td></tr></table></div>
                 <p>At the end of the game, you will draw one coin from your safe, and that will be your bonus payment.</p>
-<<<<<<< HEAD
-                <p>Your goal is to add valuable coins to your safe while avoid losing the valuable coins already in it.</p>`,
-            `<p>On each turn of this game, you will see two cards.
-                You have three seconds to flip one of the two cards.</p>
-                <p>This will reveal the coin you collect: either 1 pound, 50 pence, or 1 penny.</p>
-=======
                 <p><b>Your goal:</b> Add coins to your safe and avoid losing the ones already in it.</p>`,
             `<p>On each turn, you will see two cards.
                 You have four seconds to flip one of the two cards.</p>
                 <p>Flipping a card reveals a coin you collect: £1, 50 pence, or 1 penny.</p>
->>>>>>> 8adf63e (instruction phrasing improvement)
                 <div style='display: grid;'><table style='width: 200px; grid-column: 2;'><tr>
                 <td><img src='imgs/1pound.png' style='width:${small_coin_size}px; height:${small_coin_size}px;'></td>
                 <td><img src='imgs/50pence.png' style='width:${small_coin_size}px; height:${small_coin_size}px;'></td>
@@ -64,7 +47,8 @@ function prepare_PILT_instructions() {
         return pages
     },
         show_clickable_nav: true,
-        data: {trialphase: "instruction"}
+        data: {trialphase: "instruction"},
+        on_start: () => {updateState("start_instructions")}
     }
     ];
 
@@ -73,17 +57,11 @@ function prepare_PILT_instructions() {
             {
                 type: jsPsychHtmlKeyboardResponse,
                 css_classes: ['instructions'],
-<<<<<<< HEAD
                 stimulus: `<p>You choose a card by pressing the left or the right arrow keys.</p>
                         <p>Let's try it out now! Flip a card on the next screen.</p>
                         <p>Place your fingers on the left and right arrow keys as shown below, and press either one to continue.</p>
                         <img src='imgs/PILT_keys.jpg' style='width:250px;'></img>
                         `,
-=======
-                stimulus: `<p>Choose a card by pressing the <b>left</b> or <b>right arrow key</b> on your keyboard.</p>
-                        <p>Let's practice! On the next screen, flip a card.</p>
-                        <p>Place your fingers on the left and right arrow keys, then press either one to continue.</p>`,
->>>>>>> 8adf63e (instruction phrasing improvement)
                 choices: ['arrowleft', 'arrowright'],
                 data: {trialphase: "instruction"}
             },
@@ -125,14 +103,9 @@ function prepare_PILT_instructions() {
         type: jsPsychInstructions,
         css_classes: ['instructions'],
         pages: [
-<<<<<<< HEAD
             `${window.sessionNum == 1 ? `<p>You found a one pound coin!</p>` : ``}
             <p>Some cards are better than others, and through trial and error, you can learn which ones are best.</p> 
             <p>However, even the best cards may sometimes give only a penny or occasionally break a one-pound coin.</p>`
-=======
-            `${window.sessionNum == 1 ? `<p>You found a <b>£1 coin!</b></p>` : ``}
-            <p>Some cards are better than others, but even good cards can sometimes give only a penny or break a £1 coin.</p>`
->>>>>>> 8adf63e (instruction phrasing improvement)
         ],
         show_clickable_nav: true,
         data: {trialphase: "instruction"}
@@ -140,18 +113,12 @@ function prepare_PILT_instructions() {
     {
         type: jsPsychHtmlKeyboardResponse,
         css_classes: ['instructions'],
-<<<<<<< HEAD
         stimulus: `<p>Let's practice collecting coins. \
             On the next screen, choose cards to collect as much money as you can.</p>
             <p>One of the picture cards has mostly high value coins behind it, while the other has mostly pennies behind it.</p>
             <p>Place your fingers on the left and right arrow keys as shown below, and press either one to start practising.</p>
             <img src='imgs/PILT_keys.jpg' style='width:250px;'></img>
 `,
-=======
-        stimulus: `<p>Let's practice collecting coins. 
-            On the next screen, choose a card to collect as much money as possible.</p>
-            <p>Place your fingers on the left and right arrow keys, then press either one to start.</p>`,
->>>>>>> 8adf63e (instruction phrasing improvement)
         choices: ['arrowleft', 'arrowright'],
         data: {trialphase: "instruction"}
     }]);
@@ -205,17 +172,11 @@ function prepare_PILT_instructions() {
         {
             type: jsPsychHtmlKeyboardResponse,
             css_classes: ['instructions'],
-<<<<<<< HEAD
             stimulus: `<p>Now, let's practice minimizing your coin losses. 
             On the next screen, choose cards to lose as little money as possible.</p>
             <p>One of the picture cards will often break the high-value coins in your safe, while the other will mostly break only your pennies.</p>
             <p>Place your fingers on the left and right arrow keys as shown below, and press either one to start practising.</p>
             <img src='imgs/PILT_keys.jpg' style='width:250px;'></img>`,
-=======
-            stimulus: `<p>Now, let's practice <b>avoiding losing coins</b>!</p>
-            <p>On the next screen, choose a card to lose as little money as possible.</p>
-            <p>Place your fingers on the left and right arrow keys, then press either one to start.</p>`,
->>>>>>> 8adf63e (instruction phrasing improvement)
             choices: ['arrowright', 'arrowleft'],
             data: {trialphase: "instruction"} 
         }
@@ -350,14 +311,10 @@ function prepare_PILT_instructions() {
             type: jsPsychHtmlKeyboardResponse,
             css_classes: ['instructions'],
             stimulus: `<p>Great! Let's start playing for real.</p>
-<<<<<<< HEAD
             <p>You will now complete 20 rounds of the card choosing game, taking 15-20 minutes to complete on average.</p>
             <p>You will be able to take a short break between rounds, if you feel you need it.</p>
             <p>Place your fingers on the left and right arrow keys as shown below, and press either one to start playing.</p>
             <img src='imgs/PILT_keys.jpg' style='width:250px;'></img>`,
-=======
-            <p>Place your fingers on the left and right arrow keys, then press either one to start.</p>`,
->>>>>>> 8adf63e (instruction phrasing improvement)
             choices: ['arrowright', 'arrowleft'],
             data: {trialphase: "instruction"}
         }
@@ -405,15 +362,8 @@ const WM_instructions = [
         type: jsPsychInstructions,
         css_classes: ['instructions'],
         pages: [
-<<<<<<< HEAD
             '<p>Next, you will return to the card choosing game.</p>\
                 <p>Your goal remains to add as much money as you can to your safe.</p>',
-=======
-            `<p>Welcome back!</p>
-            <p>Next, you will return to the card choosing game.</p>\
-                <p>Your goal remains to collect and keep from breaking as many high-value coins as you can.</p>
-                <p>As before, this game is a little fast-paced, and everyone is expected to make more than a few mistakes.</p>`,
->>>>>>> 19f3e3e (welcome on eacht ask)
             `<p>This time, you will choose between three cards on every turn.<p>
             <p>In every triplet, one picture card will have only one pound and fifty pence coins behind it, while the other two cards will have only pennies.<p>
             <p>You can earn more by learning which is the better picture card in each triplet and choosing that card when you next see same triplet.</p>`,
