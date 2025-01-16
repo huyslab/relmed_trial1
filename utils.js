@@ -119,6 +119,7 @@ function check_fullscreen(){
     }
 }
 
+// Post messages to Azure server
 function postToParent(message, fallback = () => {}) {
     try {
         if (window.parent && window.parent.postMessage) {
@@ -133,7 +134,12 @@ function postToParent(message, fallback = () => {}) {
         fallback();
     }
 }
-  
+
+function updateState(state) {
+    postToParent({
+        state: state
+    });
+}
 
 // Save data to REDCap
 function saveDataREDCap(retry = 1, callback = () => {}) {
