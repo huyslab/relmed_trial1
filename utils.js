@@ -136,6 +136,7 @@ function postToParent(message, fallback = () => {}) {
 }
 
 function updateState(state) {
+    console.log(state);
     postToParent({
         state: state
     });
