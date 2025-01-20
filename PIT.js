@@ -80,6 +80,11 @@ var PITtrialList = [{"magnitude":2,"ratio":8,"coin":-0.01,"trialDuration":6902},
   {"magnitude":2,"ratio":1,"coin":0.5,"trialDuration":7009},
   {"magnitude":2,"ratio":1,"coin":-1,"trialDuration":7490}].slice(0, 35);
 
+  if (window.demo){
+    PITtrialList = PITtrialList.slice(0,4);
+  }
+  
+
 // Trial stimulus function
 function generatePITstimulus(coin, ratio) {
   const ratio_index = experimentConfig.ratios.indexOf(ratio);

@@ -360,7 +360,11 @@ async function load_squences(session) {
             throw new Error('Network response was not ok');
         }
         const structure = await response.json();
-        const sess_structure = structure[session - 1];
+        let sess_structure = structure[session - 1];
+
+        if (window.demo){
+            sess_structure = sess_structure.slice(0,3);
+        }
 
         window.totalBlockNumber = sess_structure.length
 
@@ -375,7 +379,11 @@ async function load_squences(session) {
 
         let test_sess_structure = test_structure[session - 1];
 
-        // Add folder to stimuli
+        if (window.demo){
+            test_sess_structure = [test_sess_structure[0].slice(0,10)];
+        }
+
+        // Add folder to stimuli, and rename block
         for (i=0; i<test_sess_structure.length; i++){
             for(j=0; j<test_sess_structure[i].length; j++) {
                 test_sess_structure[i][j].stimulus_left = `imgs/PILT_stims/${test_sess_structure[i][j].stimulus_left}`
@@ -397,12 +405,18 @@ async function load_squences(session) {
         }
 
         // Add Pavlovaian test to the end of test strucutre
-        test_sess_structure = [pav_test_structure].concat(test_sess_structure);
+        if (!window.demo){
+            test_sess_structure = [pav_test_structure].concat(test_sess_structure);
+        }
 
         // Fetch WM structure
         const WM_response = await fetch('pilot7_WM.json');
         const WM_structure = await WM_response.json();
-        const WM_sess_structure = WM_structure[session - 1];
+        let WM_sess_structure = WM_structure[session - 1];
+
+        if (window.demo){
+            WM_sess_structure = WM_sess_structure.slice(0,3);
+        }
 
         // Fetch WM test structure
         const WM_test_response = await fetch('pilot7_WM_test.json');
