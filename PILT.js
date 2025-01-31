@@ -466,7 +466,7 @@ function return_PILT_full_sequence(structure, test_structure, WM_structure, WM_t
     let WM_blocks = build_PILT_task(WM_structure, true, "wm");
     WM_blocks[0]["on_start"] = () => {
         updateState("wm_task_start");
-        updateState("no_resume");
+        updateState("no_resume_10_minutes");
     };
     const WM_procedure = WM_instructions.concat(WM_blocks);
 
