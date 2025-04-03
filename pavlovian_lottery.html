@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pavlovian Lottery Game</title>
+  <meta charset="UTF-8">
+  <!-- Load the jsPsych library -->
+  <script src="jspsych/jspsych.js"></script>
+  
+  <!-- Load jsPsych plugins -->
+  <script src="jspsych/plugin-html-keyboard-response.js"></script>
+  <script src="jspsych/plugin-image-keyboard-response.js"></script>
+  <script src="jspsych/plugin-preload.js"></script>
+  
+  <!-- Load custom task script -->
+  <script src="pavlovian_lottery.js"></script>
+  
+  <!-- Load stylesheets -->
+  <link rel="stylesheet" href="jspsych/jspsych.css">
+  <link rel="stylesheet" href="style.css">
+  
+  <style>
+    /* Custom styles for the Pavlovian lottery task */
+    body {
+      background-color: #f5f5f5;
+      color: #333;
+      font-family: 'Arial', sans-serif;
+    }
+    
+    .jspsych-content {
+      max-width: 800px;
+    }
+    
+    h1, h2 {
+      color: #2c3e50;
+    }
+    
+    p {
+      font-size: 18px;
+      line-height: 1.5;
+    }
+    
+    .lottery-container {
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .jspsych-btn {
+      background-color: #3498db;
+      color: white;
+      font-size: 16px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    
+    .jspsych-btn:hover {
+      background-color: #2980b9;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    // Define all the stimuli to preload
+    const pavlovianImages = [
+      "imgs/Pav_stims/wk0/PIT1.png",
+      "imgs/Pav_stims/wk0/PIT2.png",
+      "imgs/Pav_stims/wk0/PIT3.png",
+      "imgs/Pav_stims/wk0/PIT4.png",
+      "imgs/Pav_stims/wk0/PIT5.png",
+      "imgs/Pav_stims/wk0/PIT6.png"
+    ];
+    
+    const rewardImages = [
+      "imgs/1pound.png",
+      "imgs/50pence.png",
+      "imgs/1penny.png",
+      "imgs/1pennybroken.png",
+      "imgs/50pencebroken.png",
+      "imgs/1poundbroken.png",
+      "imgs/piggy-bank.png"
+    ];
+    
+    // Combine all images for preloading
+    const imagesToPreload = [...pavlovianImages, ...rewardImages];
+    
+    // Create preload trial
+    const preload = {
+      type: jsPsychPreload,
+      auto_preload: true,
+      images: imagesToPreload,
+      message: 'Loading the game... Please wait.'
+    };
+    
+    // Initialize jsPsych
+    let jsPsych = initJsPsych({
+      on_finish: function () {
+        jsPsych.data.displayData('json');
+      }
+    });
+    
+    // Get the Pavlovian lottery timeline
+    const pavlovianLottery = initPavlovianLottery(jsPsych);
+    
+    // Run the experiment with preloading
+    // jsPsych.run([preload]);
+    jsPsych.run([preload, ...pavlovianLottery.timeline]);
+  </script>
+</body>
+</html>
