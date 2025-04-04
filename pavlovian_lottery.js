@@ -103,7 +103,7 @@ function initPavlovianLottery(jsPsych) {
       `;
     },
     choices: "NO_KEYS",
-    trial_duration: 5000,
+    trial_duration: 2000,
     on_start: function() {
       // Add CSS for the lottery animation
       const css = document.createElement('style');
@@ -318,7 +318,7 @@ function initPavlovianLottery(jsPsych) {
         // Animation sequence
         setTimeout(() => {
           // First movement: slide from right to left through container
-          slotReel.style.transition = 'transform 3s cubic-bezier(0.1, 0.7, 0.1, 1)';
+          slotReel.style.transition = 'transform 1s cubic-bezier(0.1, 0.7, 0.1, 1)';
           slotReel.style.transform = `translateX(${targetPosition}px)`;
           
           // Phase 2: Highlight the winning item and the frame
@@ -329,8 +329,8 @@ function initPavlovianLottery(jsPsych) {
             if (selectionFrame) {
               selectionFrame.classList.add('frame-highlight');
             }
-          }, 3100);
-        }, 200);
+          }, 1100);
+        }, 100);
       }
     }
   };
