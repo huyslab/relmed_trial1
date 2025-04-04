@@ -466,7 +466,7 @@ const controlInstructionPages = [
             </section>
             ${createInstructionDialog(`
                 <p>The ship ran out of fuel midway.</p>
-                <p>As you can see, it drifted from the <strong>${departIsland} island</strong> to the <strong>${CONTROL_CONFIG.baseRule[departIsland]} island</strong> with the currents.</p>
+                <p>As you can see, it drifted from <span style="color: gold">Banana Island</span>🍌 to <span style="color: brown">Coconut Island</span>🥥 with the currents.</p>
                 `)}
             ${createProgressBar(6, nPages)}
         </div>
@@ -544,7 +544,7 @@ const controlInstructionPages = [
             </section>
             ${createInstructionDialog(`
                 <p>Great job!</p>
-                <p>As you can see, with enough fuel, the ${rightShip} ship reached its <strong>Home Base</strong> at ${CONTROL_CONFIG.controlRule[rightShip]} island against the currents.</p>
+                <p>As you can see, with enough fuel, the <span style="color: royalblue">blue ship</span> reached its <strong>Home Base</strong> at <span style="color: purple">Grape Island</span>🍇 against the currents.</p>
             `)}
             ${createProgressBar(8, nPages)}
         </div>
