@@ -30,7 +30,7 @@ let trigger_text_end = `<div>
 
 
 // Page 2
-const instr_page2 = `
+let instr_page2_main = `
     <p><b>Next, you'll be answering questions by typing text responses.</b></p>
     <p>These questions will ask about yourself, your feelings, background, attitudes, and everyday behaviors.</p>
     <p>For each question, you'll have <b>`+oq_timelimit_text+`</b> to write a response containing <b>at least `+min_words.toString()+` words</b>.</p>
