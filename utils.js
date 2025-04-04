@@ -442,13 +442,7 @@ function addFrequencyVectors(freq1, freq2) {
 }
 
 // Function to calculate proportions from a frequency map
-function calculateProportions(frequencyMap) {
-    // Calculate the total size from the sum of all frequencies
-    let totalSize = 0;
-    for (let value in frequencyMap) {
-        totalSize += frequencyMap[value];
-    }
-    
+function calculateProportions(frequencyMap, totalSize) {
     // Convert frequencies to proportions
     const proportionMap = {};
     for (let value in frequencyMap) {
@@ -457,41 +451,44 @@ function calculateProportions(frequencyMap) {
     return proportionMap;
 }
 
+// Function to compute the proportions of each category in an array of coins
+function computeCategoryProportions(originalArray) {
+    const frequencyMap = calculateFrequencies(originalArray);
+    return calculateProportions(frequencyMap, originalArray.length);
+}
+
 // Get the current safe state and update it with new data
 function updateSafeFrequencies() {
     // Get the state of safe from the URL variable, or set it to an empty object if not present
-    const last_safe_state = window.session_state["safe"] || {};
+    const last_safe_state = jsPsych.data.getURLVariable('safe') || '{}';
 
-    console.log("Last safe state:", last_safe_state);
+    // Parse the last safe state from JSON string to an object
+    const last_safe_state_obj = JSON.parse(last_safe_state);
 
     // Get the current state of the safe from the data
     const current_safe = calculateFrequencies(get_coins_from_data());
 
     // Add the current state to the last state
-    return addFrequencyVectors(last_safe_state, current_safe);
-}
-
-// Function to update the safe state and send it back to the parent window
-function updateSafeFun() {
-
-    // Call the function to update the safe state
-    const updated_safe = updateSafeFrequencies();
-
-    console.log("Updated safe state:", updated_safe);
-
-    let updated_session_state_obj = window.session_state || {};
-    updated_session_state_obj["safe"] = updated_safe;
-
-    // Send the updated state back to the parent window
-    postToParent({
-        session_state: JSON.stringify(updated_session_state_obj)
-    });
+    return addFrequencyVectors(last_safe_state_obj, current_safe);
 }
 
 const updateSafe = {
     type: jsPsychCallFunction,
-    func: updateSafeFun
+    func: function() {
+
+        // Call the function to update the safe state
+        const updated_safe = updateSafeFrequencies();
+
+        // Convert the updated state back to a JSON string
+        const updated_safe_string = JSON.stringify(updated_safe);
+
+        // Send the updated state back to the parent window
+        postToParent({
+            safe: updated_safe_string
+        });
+    }
 }
+
 
 // Create a represantative array of coins of n length
 function createProportionalArray(proportionMap, newSize) {
