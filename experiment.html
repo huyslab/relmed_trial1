@@ -273,11 +273,6 @@
             procedure.push(enter_fullscreen);
         }
 
-        // Resumption message
-        if (window.last_state !== "none" && window.context === "relmed") {
-            procedure.push(resumption_msg);
-        }
-
         // Create card choosing timelines
         if (["pilt-to-test", "pilt", "pilt_test", "wm", "ltm", "wm_only", "screening"].includes(window.task)){
             PILT_tasks = return_PILT_full_sequence(PILT_structure, test_structure, WM_procedure, WM_test_procedure, LTM_procedure, LTM_test_procedure);
@@ -291,10 +286,20 @@
             // Resumption message
             if (window.last_state !== "none" && window.context === "relmed") {
                 procedure.push(resumption_msg);
-            } else {
-                // Welcome message
-                procedure.push(welcome_back_msg);
             }
+
+            // Welcome message
+            procedure.push({
+                type: jsPsychInstructions,
+                css_classes: ['instructions'],
+                pages:  [
+                `<p>Welcome back!</p>
+                <p>You will now play more games of trial and error learning.</p>
+                <p>Like before, these are fast paced and everyone is expected to make more than a few mistakes.</p>`,
+                ],
+                show_clickable_nav: true,
+                data: {trialphase: "instruction"}
+            });
 
             // Add max pres rate only if vigour / PIT included
             if (resumptionRule(pilt_to_test_order, window.last_state, "pit_task_start")) {
@@ -438,9 +443,6 @@
             // Resumption message
             if (window.last_state !== "none" && window.context === "relmed") {
                 procedure.push(resumption_msg);
-            } else {
-                // Welcome message
-                procedure.push(welcome_back_msg);
             }
 
             if (resumptionRule(wm_order, window.last_state, "ltm_task_start")) {
@@ -575,18 +577,8 @@
              // Resumption message
             if (window.last_state !== "none" && window.context === "relmed") {
                 procedure.push(resumption_msg);
-            } else {
-                procedure.push({
-                    type: jsPsychInstructions,
-                    css_classes: ['instructions'],
-                    pages:  [
-                    `<p>Welcome back!</p>
-                    <p>This module comprises several tasks and questinnaires, concerning your personal feelings, preferences, thoughts, and attitudes.</p>`,
-                    ],
-                    show_clickable_nav: true,
-                    data: {trialphase: "instruction"}
-                })
             }
+
 
             if (["wk0", "wk2", "wk4"].includes(window.session)) {
 
@@ -612,10 +604,10 @@
             // Resumption message
             if (window.last_state !== "none" && window.context === "relmed") {
                 procedure.push(resumption_msg);
-            } else {
-                // Welcome message
-                procedure.push(welcome_msgs);
             }
+
+            // Welcome message
+            procedure.push(welcome_msgs);
 
             if (resumptionRule(screening_order, window.last_state, "reversal_task_start")) {
                 // Add reversal timeline
