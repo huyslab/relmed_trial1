@@ -15,6 +15,7 @@
     <script src="jspsych/plugin-survey-text.js"></script>
     <script src="jspsych/plugin-fullscreen.js"></script>
     <script src="jspsych/plugin-call-function.js"></script>
+    <script src="utils.js"></script>
     <script>
         window.maxWarnings = 15; // How many warnings before kick out
         window.interimWarning = 5; // How many missing responses before a please change your ways message
@@ -46,7 +47,7 @@
                     window.pause_resume_events = [];
                 }
             },
-            on_close: () => {saveDataREDCap()}
+            on_close: saveDataREDCap
         });
         
         // Get condition from URL, all caps are prolific, lowercase are ours
@@ -58,7 +59,6 @@
         window.session = jsPsych.data.getURLVariable('session');
         window.task = jsPsych.data.getURLVariable('task');
         window.last_state = jsPsych.data.getURLVariable('state') || "none";
-        window.session_state = JSON.parse(jsPsych.data.getURLVariable('session_state') || "{}");
 
         // Context specific response deadline
         window.default_response_deadline = window.context === "relmed" ? window.relemd_default_response_deadline : window.prolific_default_response_deadline;
@@ -77,7 +77,6 @@
         window.pause_resume_events = [];
 
     </script>
-    <script src="utils.js"></script>
     <script src="resumption.js"></script>
     <script src="ctrl-plugins/plugin-ctrl-explore-trial-2.js"></script>
     <script src="ctrl-plugins/plugin-ctrl-predict-trial-mouse.js"></script>
@@ -90,7 +89,6 @@
     <script src="plugin-reversal.js"></script>
     <script src="reversal.js"></script>
     <script src="plugin-coin-lottery.js"></script>
-    <script src="bonus_safe.js"></script>
     <script src="press_test.js"></script>
     <script src="PILT.js"></script>
     <script src="PILT_instructions.js"></script>
@@ -101,9 +99,9 @@
     <script src="acceptability.js"></script>
     <script src="questionnaires.js"></script>
     <script src="discounting.js"></script>
-    <script src="control_configs.js"></script>
     <script src="control_instructions_interactive.js"></script>
     <script src="control_self_report.js"></script>
+    <script src="control_sequences.js"></script>
     <script src="build_control_timeline.js"></script>
     <script src="open-text/study_config.js"></script>
     <script src="open-text/tasks/questions.js"></script>
@@ -179,20 +177,8 @@
                     <p>The purpose of this session is to examine how people learn from positive and negative feedback while playing games.
                     <p>You will play a few simple trial-and-error learning games. Your goal in each game is to win as many coins as possible.</p>
                     <p>The games may feel a bit fast-paced because we're interested in your quick, intuitive decisions. Since they're designed around learning from experience, making mistakes is completely expected. Over time, you'll figure out better choices and improve your performance.</p>
-                    ` + (window.session === "wk0" ?  `<b>Please read the instructions carefully. They may differ from the training session.</b>` : "");
+                    `; + (window.session === "wk0" ?  `<h3>Please read the instructions carefully. They are not exactly the same as the training session.</h3>` : "")
         }
-    }
-
-    const resumption_msg = {
-        type: jsPsychInstructions,
-        css_classes: ['instructions'],
-        pages: [
-            `<p>Welcome back to this module!</p>
-            <p>It seems that your participation has been interrupted. Don't worry, you can continue from where you left off.</p>
-            <p>Please try to complete the module in one go, without interruption.</p>`
-        ],
-        show_clickable_nav: true,
-        data: {trialphase: "resumption_instructions"}
     }
 
     const resumption_msg = {
@@ -216,31 +202,19 @@
         show_clickable_nav: true,
         data: {trialphase: "instruction"}
     }
-
-    const welcome_back_msg = {
-        type: jsPsychInstructions,
-        css_classes: ['instructions'],
-        pages:  [
-        `<p>Welcome back!</p>
-        <p>You will now play more games of trial and error learning.</p>
-        <p>Like before, these are fast paced and everyone is expected to make more than a few mistakes.</p>`,
-        ],
-        show_clickable_nav: true,
-        data: {trialphase: "instruction"}
-    };
     
     // End of experiment message
     let end_exp_msg_content = [];
     if (window.context === "relmed") {
         end_exp_msg_content = [
             `<p>Thank you for completing this module!</p>
-            <p>When you click next, your data will be uploaded to the secure server. This may take up to two minutes. Please don't close or refresh your browser at this time.</p>
+            <p>When you click continue, your data will be uploaded to the secure server. This may take up to two minutes. Please don't close or refresh your browser at this time.</p>
             <p>When data upload is complete, you will be redirected back to My RELMED.</p>`];
     } else {
         end_exp_msg_content = [
             `<p>Thank you for participating in this study!</p>
             <p>The purpose of this study is to develop games that can measure people's individual learning tendencies. In the future, these games will be used to facilitate mental health research ongoing at UCL.</p>`,
-            `<p>When you click next, your data will be uploaded to the server. This may take up to two minutes.Please don't close or refresh your browser at this time.</p>
+            `<p>When you click continue, your data will be uploaded to the server. This may take up to two minutes.Please don't close or refresh your browser at this time.</p>
             <p>When data upload is complete, you will be rediredted to Prolific to complete your submission</p>`];
     }
     const end_experiment_msgs = [
@@ -372,6 +346,18 @@
         if (window.task == "pilt") {
             // Preload
             procedure.push(preload_PILT);
+
+            procedure.push({
+                type: jsPsychInstructions,
+                css_classes: ['instructions'],
+                pages:  [
+                `<p>Welcome back!</p>
+                <p>You will now play more games of trial and error learning.</p>
+                <p>Like before, these are fast paced and everyone is expected to make more than a few mistakes.</p>`,
+                ],
+                show_clickable_nav: true,
+                data: {trialphase: "instruction"}
+            });
 
             procedure = procedure.concat(PILT_tasks.PILT_procedure);
             procedure = procedure.concat([
@@ -605,42 +591,35 @@
             // Welcome message
             procedure.push(welcome_msgs);
 
-            if (resumptionRule(screening_order, window.last_state, "reversal_task_start")) {
-                // Add reversal timeline
-                console.log("Adding reversal");
-                procedure = procedure.concat(reversal_instructions);
-                procedure = procedure.concat(reversal_blocks);
-                procedure = procedure.concat([
-                    acceptability_intro,
-                    acceptability_reversal
-                ]);
-            }
+            // Add reversal timeline
+            procedure = procedure.concat(reversal_instructions);
+            procedure = procedure.concat(reversal_blocks);
+            procedure = procedure.concat([
+                acceptability_intro,
+                acceptability_reversal
+            ]);
 
-            if (resumptionRule(screening_order, window.last_state, "pilt_task_start")) {
-                console.log("Adding PILT");
-                // Preload
-                procedure.push(preload_PILT);
+            // Preload
+            procedure.push(preload_PILT);
 
-                procedure.push({
-                    type: jsPsychInstructions,
-                    css_classes: ['instructions'],
-                    pages:  [
-                    `<p>You will now play another game of trial and error learning.</p>
-                    <p>Like before, these are fast paced and everyone is expected to make more than a few mistakes.</p>`,
-                    ],
-                    show_clickable_nav: true,
-                    data: {trialphase: "instruction"}
-                });
+            procedure.push({
+                type: jsPsychInstructions,
+                css_classes: ['instructions'],
+                pages:  [
+                `<p>You will now play another game of trial and error learning.</p>
+                <p>Like before, these are fast paced and everyone is expected to make more than a few mistakes.</p>`,
+                ],
+                show_clickable_nav: true,
+                data: {trialphase: "instruction"}
+            });
 
-                procedure = procedure.concat(PILT_tasks.PILT_procedure);
-                procedure = procedure.concat([
-                    acceptability_intro,
-                    acceptability_PILT
-                ]);
-            }
+            procedure = procedure.concat(PILT_tasks.PILT_procedure);
+            procedure = procedure.concat([
+                acceptability_intro,
+                acceptability_PILT
+            ]);
 
             // Add questionnaire timeline
-            console.log("Adding questionnaires");
             procedure = procedure.concat(questionnaires_timeline);
         }
 
