@@ -67,7 +67,6 @@ const pre_kick_out_warning = {
 
 let kick_out_warning = {}
 if (window.context == "relmed") {
-    console.log("Relmed context detected");
     kick_out_warning = {
         type: jsPsychHtmlKeyboardResponse,
         conditional_function: function() {
@@ -94,9 +93,6 @@ if (window.context == "relmed") {
         }
     }    
 } else {
-    console.log("Prolific context detected");
-    console.log(window.context)
-
     kick_out_warning = {
         type: jsPsychHtmlKeyboardResponse,
         conditional_function: function() {
@@ -170,7 +166,6 @@ function postToParent(message, fallback = () => {}) {
             // Send message to localhost and relmed.ac.uk
             window.parent.postMessage(message, 'http://localhost:3000');
             window.parent.postMessage(message, 'https://relmed.ac.uk');
-            window.parent.postMessage(message, 'https://www.relmed.ac.uk');
         } else {
             throw new Error("Parent window or postMessage is unavailable.");
         }
@@ -183,15 +178,6 @@ function postToParent(message, fallback = () => {}) {
 }
 
 function updateState(state) {
-
-    // Save data to REDCap
-    if (!state.includes("no_resume")){
-        saveDataREDCap();
-    }
-
-    // Update safe state
-    updateSafeFun();
-
     console.log(state);
     postToParent({
         state: state
@@ -204,23 +190,19 @@ function saveDataREDCap(retry = 1, extra_fields = {}, callback = () => {}) {
     // Get data, remove stimulus string
     let jspsych_data = jsPsych.data.get().ignore('stimulus').json();
 
-    const data_message = {
-        data: {
-            record_id: window.participantID + "_" + window.module_start_time,
-            participant_id: window.participantID,
-            sitting_start_time: window.module_start_time,
-            session: window.session,
-            module: window.task,
-            data: jspsych_data 
-        },
-        ...extra_fields
-    };
-
-    console.log("Data to be sent:", data_message);
-
     if (window.context === "relmed") {
         postToParent(
-            data_message,
+            {
+                ...{
+                    record_id: window.participantID + "_" + window.module_start_time,
+                    participant_id: window.participantID,
+                    sitting_start_time: window.module_start_time,
+                    session: window.session,
+                    module: window.task,
+                    data: jspsych_data 
+                },
+                ...extra_fields
+        },
             () => {
                 setTimeout(function () {
                     saveDataREDCap(retry - 1);
@@ -374,7 +356,7 @@ function get_coins_from_data() {
         }
 
         // Worst outcome for missed response
-        if (response[i] === "noresp"){
+        if (response === "noresp"){
             const worst = Math.min(...[feedback_right[i], feedback_left[i], feedback_middle[i]].filter(item => typeof item === 'number'));
 
             coins_for_lottery.push(worst);
@@ -400,7 +382,7 @@ function get_coins_from_data() {
     for (i=0; i<response.length; i++){
 
         // Worst outcome for missed response
-        if ((response[i] !== "right") & (response[i] !== "left")){
+        if ((response !== "right") & (response !== "left")){
             const worst = Math.min(feedback_right[i], feedback_left[i]);
 
             coins_for_lottery.push(worst);
