@@ -332,6 +332,7 @@ const piggyBankTrial = {
     data.trial_number = vigourTrialCounter;
     if (vigourTrialCounter % (vigourTrials.length / 3) == 0 || vigourTrialCounter == vigourTrials.length) {
       saveDataREDCap(retry = 3);
+      updateVigourBonus();
     }
 
     // No response
