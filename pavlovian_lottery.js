@@ -359,7 +359,7 @@ function initPavlovianLottery(jsPsych) {
       `;
     },
     choices: "NO_KEYS",
-    trial_duration: 2000,
+    trial_duration: 3000,
     on_start: function() {
       // Add CSS for the result display
       const css = document.createElement('style');
