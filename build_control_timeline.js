@@ -29,7 +29,7 @@ const controlPreload = {
   data: {
     trialphase: "control_preload"
   },
-  on_start: () => {
+  on_finish: () => {
     // Report to tests
     console.log("load_successful")
 
@@ -153,7 +153,7 @@ reward_sequence.forEach((trial, index) => {
       left: jsPsych.timelineVariable('left'),
       right: jsPsych.timelineVariable('right'),
       current: jsPsych.timelineVariable('current'),
-      reward_amount: jsPsych.timelineVariable('reward_amount')
+      reward_amount: "5p"
     });
   }
   
@@ -164,7 +164,7 @@ reward_sequence.forEach((trial, index) => {
     left: jsPsych.timelineVariable('left'),
     right: jsPsych.timelineVariable('right'),
     current: jsPsych.timelineVariable('current'),
-    reward_amount: jsPsych.timelineVariable('reward_amount'),
+    reward_amount: "5p",
     reward_decision: 6000,
     post_trial_gap: 0,
     save_timeline_variables: true,
@@ -265,9 +265,9 @@ controlTimeline.push(controlPreload);
 controlTimeline.push(controlInstructionsTimeline);
 
 // Add the explore, predict, reward trials
-controlTimeline[0]["on_timeline_start"] = () => {
-  updateState(`no_resume`);
-  updateState(`control_task_start`);
+controlExploreTimeline[0]["on_timeline_start"] = () => {
+  updateState("no_resume");
+  updateState("control_task_start");
 };
 for (let i = 0; i < explore_sequence.length; i++) {
   // Add the explore trials
