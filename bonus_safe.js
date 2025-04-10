@@ -1,4 +1,4 @@
-// Get the proportion of coins in safe, reweighted by a generous prior
+// Get proportions of coins in safe
 const getCoinProportions = () => {
 
     // Get the updates safe
@@ -23,31 +23,25 @@ const getCoinProportions = () => {
     return weightedSum.map(value => value / sum);
 }
 
-// Get the list of coins in the safe
-const getCoins = () => {
-
-    // Get the updates safe
-    const updated_safe = updateSafeFrequencies();
-
-    // Compute the coin proportions
-    const coin_proportions = calculateProportions(updated_safe);
-
-    return createProportionalArray(coin_proportions, 35).sort()
-};
-
-
 // Coin lottery trial
 const coin_lottery = {
     type: jsPsychCoinLottery,
-    coins: getCoins,
-    props: window.context === "relmed" ? [] : getCoinProportions,
-    bonus_coins: window.context === "relmed" ? relmedSafeBonus : [],
-    n_flips: window.context === "relmed" ? 4 : 1,
+    coins: () => {
+
+        // Get the updates safe
+        const updated_safe = updateSafeFrequencies();
+
+        // Compute the coin proportions
+        const coin_proportions = calculateProportions(updated_safe);
+
+        return createProportionalArray(coin_proportions, 35).sort()
+    },
+    props: ,
     on_finish: (data) => {
         const bonus = data.outcomes.reduce((acc, num) => acc + num, 0);
-    
+
         postToParent({bonus: bonus});
-    
+
         updateState("coin_lottery_end");
     }
 }
@@ -164,11 +158,11 @@ function relmedSafeBonus(numCoins = 4, range = [2, 3]) {
     const logProbabilities = convertToLogProbabilities(coinProportions);
 
     // Find all possible combinations of coins that sum within the range and shuffle them
-    const all_cobms = jsPsych.randomization.shuffle(findCoinCombinations(Object.keys(coinProportions).map(Number), numCoins, range));
+    const all_cobms = jsPsych.shuffle(findCoinCombinations(Object.keys(coinProportions).map(Number), numCoins, range));
 
     // Draw a combination from the distribution based on the log probabilities
     const drawnCombination = drawCombinationFromDistribution(all_cobms, logProbabilities);
 
     // Shuffle the drawn combination and return it
-    return jsPsych.randomization.shuffle(drawnCombination);
+    return jsPsych.shuffle(drawnCombination);
 }
