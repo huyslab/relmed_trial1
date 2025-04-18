@@ -110,6 +110,10 @@ var jsPsychRewardPrompt = (function (jspsych) {
             </section>
             <div class="instruction-dialog" style="bottom:20%; min-width: 600px;">
                 <div class="instruction-content" style="font-size: 1.25em; text-align: center;">
+                    <h3>You're about to take your first <strong>Reward Mission</strong></h3>
+                    <p>In this mission, select the correct ship and fuel it appropriately to deliver cargo to the target island for your reward!</p>
+                    <p>We will now give you a short guide on reward missions.</p>
+                    <p>Press <span class="spacebar-icon">&nbsp;←&nbsp;</span> or <span class="spacebar-icon">&nbsp;→&nbsp;</span> to continue</p>
                 </div>
             </div>
           </main>
@@ -141,77 +145,70 @@ var jsPsychRewardPrompt = (function (jspsych) {
       // Change the instruction dialog text
       const instructionContent = display_element.querySelector('.instruction-content');
 
-      if (trial.choices !== "NO_KEYS") {
-        const pages = [
-          {
-            html: `
-              <h3>You're about to take your first <strong>Reward Mission</strong>!</h3>
-              <p>In this mission, select the correct ship and fuel it appropriately to deliver cargo to the target island and earn your reward!</p>
-              <p>We will now give you a short guide on how Reward Missions work.</p>
+      // Initial keyboard listener
+      if (trial.choices != "NO_KEYS") {
+        this.jsPsych.pluginAPI.getKeyboardResponse({
+          callback_function: () => {
+            // Change the content
+            instructionContent.innerHTML = `
+              <p><span class="highlight-txt">Notice the quest scroll on the top right!</span> It shows the target and reward for this round.</p>
+              <p>Think about what you have seen and learned about the homebase of the ships.</p>
+              <p>Then, choose the ship that can reach the <strong>target island</strong> shown in the scroll.</p>
               <p>Press <span class="spacebar-icon">&nbsp;←&nbsp;</span> or <span class="spacebar-icon">&nbsp;→&nbsp;</span> to continue</p>
-            `,
-            showExtra: false
+            `;
+            // Set up the next keyboard listener for the next screen
+            this.jsPsych.pluginAPI.getKeyboardResponse({
+              callback_function: () => {
+                // Show the currents and the drift island
+                document.querySelector('.island-near').style.visibility = 'visible';
+                document.querySelector('.island-far').style.visibility = 'visible';
+                document.querySelector('.ocean-current').style.visibility = 'visible';
+                // Change the content again
+                instructionContent.innerHTML = `
+                  <p><span class="highlight-txt">After choosing the ship, now you see the current strength and the drift island.</span></p>
+                  <p>Think about the fuel level required for each current strength and plan your effort accordingly.</p>
+                  <p>Then, press the same arrow key repeatedly to provide appropriate amount of fuel in <strong>3 seconds</strong>.</p>
+                  <p>Press <span class="spacebar-icon">&nbsp;←&nbsp;</span> or <span class="spacebar-icon">&nbsp;→&nbsp;</span> to continue</p>`;
+                  // Set up next keyboard listener
+                  this.jsPsych.pluginAPI.getKeyboardResponse({
+                    callback_function: () => {
+                      // Change the content again
+                      instructionContent.innerHTML = `
+                      <p>To recap, during <strong>Reward Missions</strong>, you will:</p>
+                      <ul>
+                          <li>1. Select ships based on the target island</li>
+                          <li>2. Add fuel wisely and properly based on the current strength and the drift island</li>
+                          <li><strong>Successfully transport the cargo to the target and win the quest reward!</strong></li>
+                      </ul>
+                      <p>Now, press <span class="spacebar-icon">&nbsp;←&nbsp;</span> or <span class="spacebar-icon">&nbsp;→&nbsp;</span> to officially enter your first Reward Mission.</p>
+                      `;
+                      this.jsPsych.pluginAPI.getKeyboardResponse({
+                        callback_function: end_trial,
+                        valid_responses: trial.choices,
+                        rt_method: "performance",
+                        persist: false,
+                        allow_held_key: false
+                      })
+                    },
+                    valid_responses: trial.choices,
+                    rt_method: "performance",
+                    persist: false,
+                    allow_held_key: false
+                  })
+              },
+              valid_responses: trial.choices,
+              rt_method: "performance",
+              persist: false,
+              allow_held_key: false
+            });
           },
-          {
-            html: `
-              <p><span class="highlight-txt">Notice the quest scroll on the top right!</span> It shows the target island and reward for this mission.</p>
-              <p>Think about what you've learned about each ship's homebase - you need to select a ship that can reach the <strong>target island</strong> shown in the scroll.</p>
-              <p>Press <span class="spacebar-icon">&nbsp;←&nbsp;</span> or <span class="spacebar-icon">&nbsp;→&nbsp;</span> to continue</p>
-            `,
-            showExtra: false
-          },
-          {
-            html: `
-              <p><span class="highlight-txt">After having choosen your ship, note the current strength level and drift island shown.</span></p>
-              <p>Remember: stronger currents require more fuel to reach the target instead of drifting.</p>
-              <p>You'll have <strong>3 seconds</strong> to add fuel by rapidly pressing the same arrow key. Add enough fuel to reach the target island!</p>
-              <p>Press <span class="spacebar-icon">&nbsp;←&nbsp;</span> or <span class="spacebar-icon">&nbsp;→&nbsp;</span> to continue</p>
-            `,
-            showExtra: true
-          },
-          {
-            html: `
-              <p>To recap, during <strong>Reward Missions</strong>, you will:</p>
-              <ol style="list-style-position: inside; padding-left:0; margin-left: 0;">
-                  <li>Select the ship whose homebase matches your target island</li>
-                  <li>Add fuel wisely and properly based on the current strength and the drift island</li>
-                  <li><strong>Successfully deliver cargo to the target island and earn your reward!</strong></li>
-              </ol>
-              <p>Now, press <span class="spacebar-icon">&nbsp;←&nbsp;</span> or <span class="spacebar-icon">&nbsp;→&nbsp;</span> to <span class="highlight-txt">begin your first Reward Mission.</span></p>
-            `,
-            showExtra: true
-          }
-        ];
-      
-        const showElements = (yes) => {
-          ['island-near','island-far','ocean-current']
-            .forEach(sel => document.querySelector(`.${sel}`).style.visibility = yes ? 'visible' : 'hidden');
-        };
-      
-        let idx = 0;
-        const nextPage = () => {
-          if (idx === pages.length) {
-            end_trial();
-            return;
-          }
-          // render this page
-          instructionContent.innerHTML = pages[idx].html;
-          showElements(pages[idx].showExtra);
-          idx++;
-      
-          // wait for a key to show the next page
-          this.jsPsych.pluginAPI.getKeyboardResponse({
-            callback_function: nextPage,
-            valid_responses: trial.choices,
-            rt_method: "performance",
-            persist: false,
-            allow_held_key: false
-          });
-        };
-      
-        // kick off the sequence
-        nextPage();
+          valid_responses: trial.choices,
+          rt_method: "performance",
+          persist: false,
+          allow_held_key: false
+        });
       }
+
 
     }
 
