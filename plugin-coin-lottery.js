@@ -107,11 +107,11 @@ var jsPsychCoinLottery = (function(jspsych) {
                 throw new Error("The length of coins cannot be smaller than num_cards")
             }
 
-            if (trial.props.length > 0 && (trial.props.length !== trial.values.length)){
+            if (trial.props && (trial.props.length !== trial.values.length)){
                 throw new Error("Lengths of props and values don't match.")
             }
 
-            if (trial.props.length === 0 && trial.bonus_coins.length === 0) {
+            if (!trial.props && !trial.bonus_coins) {
                 throw new Error("Either props or bonus_coins must be provided.")
             }
             
@@ -301,9 +301,14 @@ var jsPsychCoinLottery = (function(jspsych) {
                 data.choices.push(choice);
                 data.rts.push(rt);
 
+                // Call after_last_response if last response
+                if (data.choices.length >= trial.n_flips){
+                    after_last_response(data);
+                }
+
                 // Add coin
                 let draw;
-                if (trial.props.length > 0) {
+                if (trial.props) {
                     draw = trial.values[sampleCategorical(trial.props)];
                 }
                 else {
@@ -323,11 +328,6 @@ var jsPsychCoinLottery = (function(jspsych) {
 
                 // Save drawn outcome to data
                 data.outcomes.push(draw);
-
-                // Call after_last_response if last response
-                if (data.choices.length >= trial.n_flips){
-                    after_last_response(data);
-                }
 
                 // Flip
                 rect.classList.toggle('flipped');
@@ -359,9 +359,7 @@ var jsPsychCoinLottery = (function(jspsych) {
                 });
 
                 // Change message
-                // Calculate bonus, treating negative values as 0
-                const bonus = data.outcomes.reduce((sum, val) => sum + (val > 0 ? val : 0), 0);
-                var prompt_txt = `<p>You get £${bonus.toFixed(2)} extra!</p>`
+                var prompt_txt = trial.n_flips > 1 ? "<p>The coins above" : "<p>This coin" + ` will be added to your bonus payment.</p>`
 
                 if (data.outcomes.some(item => item < 0)){
                     prompt_txt += "<p>(Broken coins are worth £0)</p>"
@@ -373,7 +371,7 @@ var jsPsychCoinLottery = (function(jspsych) {
                 const endButton = document.createElement('button');
                 endButton.innerHTML = 'Continue';
                 endButton.onclick = end_trial;
-                prompt.appendChild(endButton);
+                prompt.children[1].appendChild(endButton);
             }
 
             // End trial function
@@ -420,6 +418,8 @@ var jsPsychCoinLottery = (function(jspsych) {
                 }
                 prompt.innerHTML = msg;
 
+                // Remove flip button
+                prompt.children[1].removeChild(flipButton);
             }
 
             // Sample from categorical distribution
@@ -446,7 +446,7 @@ var jsPsychCoinLottery = (function(jspsych) {
             
             // Add text
             const prompt = document.createElement('div');
-            prompt.innerHTML = "<p>This is a sample of the coins in your safe (with the same mix of coin types).</p>\
+            prompt.innerHTML = "<p>These are the coins you collected in the challenge.</p>\
                 <p>Press this button to hide and shuffle them: </p>";
             prompt.className = "instructions";
             prompt.id = "prompt";
