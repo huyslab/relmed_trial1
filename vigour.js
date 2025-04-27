@@ -334,6 +334,11 @@ const piggyBankTrial = {
       saveDataREDCap(retry = 3);
       updateVigourBonus();
     }
+    if (fsChangeHandler) {
+      document.removeEventListener('fullscreenchange', fsChangeHandler);
+      document.removeEventListener('webkitfullscreenchange', fsChangeHandler);
+      fsChangeHandler = null;
+    }
 
     // No response
     if (data.trial_presses === 0 && data.timeline_variables.ratio === 1) {
