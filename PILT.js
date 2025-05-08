@@ -520,33 +520,33 @@ async function load_sequences(session) {
             WM_structure, LTM_structure,
             WM_test_structure, LTM_test_structure
         ] = await Promise.all([
-            fetchJSON('trial1_PILT.json'),
-            fetchJSON('trial1_PILT_test.json'),
+            fetchJSON('pilot9_PILT.json'),
+            fetchJSON('pilot9_PILT_test.json'),
             fetchJSON('pavlovian_test.json'),
-            fetchJSON('trial1_WM.json'),
-            fetchJSON('trial1_LTM.json'),
-            fetchJSON('trial1_WM_test.json'),
-            fetchJSON('trial1_LTM_test.json')
+            // fetchJSON('trial1_WM.json'),
+            // fetchJSON('trial1_LTM.json'),
+            // fetchJSON('trial1_WM_test.json'),
+            // fetchJSON('trial1_LTM_test.json')
         ]);
 
         // Select session
         let PILT_sess = PILT_structure[session];
         let PILT_test_sess = PILT_test_structure[session];
-        let WM_sess = WM_structure[session];
-        let LTM_sess = LTM_structure[session];
-        let WM_test_sess = WM_test_structure[session];
-        let LTM_test_sess = LTM_test_structure[session];
+        // let WM_sess = WM_structure[session];
+        // let LTM_sess = LTM_structure[session];
+        // let WM_test_sess = WM_test_structure[session];
+        // let LTM_test_sess = LTM_test_structure[session];
 
         if (window.demo) {
             PILT_sess = PILT_sess.slice(0, 6);
             PILT_test_sess = [PILT_test_sess[0].slice(0, 25)];
-            WM_sess = WM_sess.slice(0, 3);
-            LTM_sess = LTM_sess.slice(0, 3);
+            // WM_sess = WM_sess.slice(0, 3);
+            // LTM_sess = LTM_sess.slice(0, 3);
         }
         
         adjustStimuliPaths(PILT_test_sess, 'PILT_stims');
-        adjustStimuliPaths(WM_test_sess, 'PILT_stims');
-        adjustStimuliPaths(LTM_test_sess, 'PILT_stims');
+        // adjustStimuliPaths(WM_test_sess, 'PILT_stims');
+        // adjustStimuliPaths(LTM_test_sess, 'PILT_stims');
 
         pav_test_structure.forEach(trial => {
             trial.stimulus_left = `imgs/Pav_stims/${window.session}/${trial.stimulus_left}`;
@@ -560,18 +560,18 @@ async function load_sequences(session) {
             PILT_test_sess = [pav_test_structure].concat(PILT_test_sess);
         }
 
-        run_full_experiment(PILT_sess, PILT_test_sess, WM_sess, WM_test_sess, LTM_sess, LTM_test_sess);
+        run_full_experiment(PILT_sess, PILT_test_sess);
     } catch (error) {
         console.error('Error loading sequences:', error);
     }
 }
 
 
-function return_PILT_full_sequence(PILT_structure, PILT_test_structure, WM_structure, WM_test_structure, LTM_structure, LTM_test_structure) {
+function return_PILT_full_sequence(PILT_structure, PILT_test_structure) {
     // Compute best-rest
     computeBestRest(PILT_structure);
-    computeBestRest(WM_structure);
-    computeBestRest(LTM_structure);
+    // computeBestRest(WM_structure);
+    // computeBestRest(LTM_structure);
 
     let PILT_procedure = [];
 
@@ -621,47 +621,47 @@ function return_PILT_full_sequence(PILT_structure, PILT_test_structure, WM_struc
    const PILT_test_procedure = generateTestProcedure(PILT_test_structure, "pilt");
     
     // WM block
-    let WM_procedure;
-    if (WM_structure != null){
-        let WM_blocks = build_PILT_task(WM_structure, true, "wm");
-        WM_blocks[0]["on_start"] = () => {
+    // let WM_procedure;
+    // if (WM_structure != null){
+    //     let WM_blocks = build_PILT_task(WM_structure, true, "wm");
+    //     WM_blocks[0]["on_start"] = () => {
 
-            if (!(["wk24", "wk28"].includes(window.session))) {
-                updateState("no_resume_10_minutes");
-            }
+    //         if (!(["wk24", "wk28"].includes(window.session))) {
+    //             updateState("no_resume_10_minutes");
+    //         }
             
-            updateState("wm_task_start");
-        };
-        WM_procedure = WM_instructions.concat(WM_blocks);    
-    } else {
-        WM_procedure = [];
-    }
+    //         updateState("wm_task_start");
+    //     };
+    //     WM_procedure = WM_instructions.concat(WM_blocks);    
+    // } else {
+    //     WM_procedure = [];
+    // }
 
     // LTM block
-    let LTM_procedure;
-    if (LTM_structure != null) {
-        let LTM_blocks = build_PILT_task(LTM_structure, true, "ltm");
-        LTM_blocks[0]["on_start"] = () => {
-            updateState("ltm_task_start");
-        };
-        LTM_procedure = LTM_instructions.concat(LTM_blocks);    
-    } else {
-        LTM_procedure = []
-    }
+    // let LTM_procedure;
+    // if (LTM_structure != null) {
+    //     let LTM_blocks = build_PILT_task(LTM_structure, true, "ltm");
+    //     LTM_blocks[0]["on_start"] = () => {
+    //         updateState("ltm_task_start");
+    //     };
+    //     LTM_procedure = LTM_instructions.concat(LTM_blocks);    
+    // } else {
+    //     LTM_procedure = []
+    // }
 
     // WM test block
-    const WM_test_procedure = generateTestProcedure(WM_test_structure, "wm");
+    // const WM_test_procedure = generateTestProcedure(WM_test_structure, "wm");
 
     // LTM test block
-    const LTM_test_procedure = generateTestProcedure(LTM_test_structure, "ltm");    
+    // const LTM_test_procedure = generateTestProcedure(LTM_test_structure, "ltm");    
 
 
     return {
         PILT_procedure: PILT_procedure,
         PILT_test_procedure: PILT_test_procedure,
-        WM_procedure: WM_procedure,
-        WM_test_procedure: WM_test_procedure,
-        LTM_procedure: LTM_procedure,
-        LTM_test_procedure: LTM_test_procedure
+        // WM_procedure: WM_procedure,
+        // WM_test_procedure: WM_test_procedure,
+        // LTM_procedure: LTM_procedure,
+        // LTM_test_procedure: LTM_test_procedure
     }
 }

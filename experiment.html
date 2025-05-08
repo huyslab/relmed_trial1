@@ -251,7 +251,7 @@
         }
     ]
 
-    function run_full_experiment(PILT_structure, test_structure, WM_procedure, WM_test_procedure, LTM_procedure, LTM_test_procedure){
+    function run_full_experiment(PILT_structure, test_structure){
 
         let procedure = [];
 
@@ -265,7 +265,54 @@
 
         // Create card choosing timelines
         if (["pilt-to-test", "pilt", "pilt_test", "wm", "ltm", "wm_only", "screening"].includes(window.task)){
-            PILT_tasks = return_PILT_full_sequence(PILT_structure, test_structure, WM_procedure, WM_test_procedure, LTM_procedure, LTM_test_procedure);
+            PILT_tasks = return_PILT_full_sequence(PILT_structure, test_structure);
+        }
+
+        if (window.task === "pilot9"){
+            // Preload
+            procedure.push(preload_PILT);
+
+            // Max press rate test
+            console.log("Adding max press rate");
+            procedure = procedure.concat(maxPressTimeline);
+
+            // Adding PILT
+            console.log("Adding PILT");
+                procedure = procedure.concat(PILT_tasks.PILT_procedure);
+                procedure = procedure.concat([
+                    acceptability_intro,
+                    acceptability_PILT
+            ]);
+
+            // Add vigour task timeline
+            console.log("Adding vigour");
+            const vigourTimeline = [
+                preload_vigour,
+                vigourInstructions,
+                ...experimentTimeline,
+            ];
+            procedure = procedure.concat(vigourTimeline);
+            procedure = procedure.concat([
+                acceptability_intro,
+                acceptability_vigour
+            ]);
+
+            // Add PIT timeline: instructions, trials, bonus
+            console.log("Adding PIT");
+            const PITtimeline = [
+                PITinstructions,
+                PITtrials
+            ];
+            procedure = procedure.concat(PITtimeline);
+            procedure = procedure.concat([
+                acceptability_intro,
+                acceptability_PIT
+            ]);
+
+            // PILT & Pavlovian test 
+            console.log("Adding PILT test");
+            procedure = procedure.concat(PILT_tasks.PILT_test_procedure);
+
         }
 
         if (window.task === "pilt-to-test") {
