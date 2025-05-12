@@ -666,7 +666,7 @@ function return_PILT_full_sequence(PILT_structure, PILT_test_structure) {
     }
 }
 
-const computerRelativePILTBonus = () => {
+const computeRelativePILTBonus = () => {
 
     // Compute lowest and highest sum of coins possible to earn
     const feedback_right = jsPsych.date.get().filter({trial_type: "PILT"}).select("feeback_right");
