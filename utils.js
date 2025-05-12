@@ -662,8 +662,7 @@ function inter_block_stimulus(){
 
         txt +=  n_groups > 1 ? "these cards." : "this card."
         
-        txt += `<p><img src='imgs/safe.png' style='width:100px; height:100px;'></p>
-        <p>Altogether, these coins were ${valence == 1 ? "added to your safe" : "broken in your safe"} on this round:<p>`
+        txt += `<p>Altogether, these coins were ${valence == 1 ? "added to your safe" : "broken in your safe"} on this round:<p>`
         
         // Add rest to outcomes
         if (window.task !== "screening"){
