@@ -576,7 +576,7 @@ function return_PILT_full_sequence(PILT_structure, PILT_test_structure) {
     let PILT_procedure = [];
 
     // Add instructions
-    // PILT_procedure = PILT_procedure.concat(prepare_PILT_instructions());
+    PILT_procedure = PILT_procedure.concat(prepare_PILT_instructions());
 
     // Add PILT
     if (PILT_structure != null){
