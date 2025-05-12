@@ -214,3 +214,20 @@ const debrief = {
         trialphase: 'debrief_instructions'
     }
 };
+
+const debrief_pilot9 = {
+    type: jsPsychSurveyText,
+    questions: [
+        {
+            prompt: "<p>Thinking back on <strong>the whole study</strong>, was there anything unclear in any of the instructions?</p><p>All the games in chronological order: card choosing game, piggy-bank game (no cloud version), piggy-bank game (cloudy version), shipping game</p>",
+            columns: 35,
+            rows: 4,
+            placeholder: '',
+            name: "instructions",
+            required: true
+        }
+    ],
+    data: {
+        trialphase: 'debrief_instructions'
+    }
+};
