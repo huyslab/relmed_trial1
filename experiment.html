@@ -111,6 +111,7 @@
     <script src="open-text/tasks/questions.js"></script>
     <script src="open-text/tasks/instructions.js"></script>
     <script src="open-text/experiment.js"></script>
+    <script src="pavlovian_lottery.js"></script>
     <link href="jspsych/jspsych.css" rel="stylesheet" type="text/css" />
     <link href="vigour_styles.css" rel="stylesheet" type="text/css" />
     <link href="PIT_styles.css" rel="stylesheet" type="text/css" />
@@ -120,6 +121,7 @@
     <link href="control_styles.css" rel="stylesheet" type="text/css" />
     <link href="open-text/openText_style.css" rel="stylesheet" type="text/css" />
     <link href="dd.css" rel="stylesheet" type="text/css" />
+    <link href="pavlovian_lottery.css" rel="stylesheet" type="text/css" />
 </head>
 <style>
     .jsPsychDE {
@@ -275,6 +277,10 @@
             // Max press rate test
             console.log("Adding max press rate");
             procedure = procedure.concat(maxPressTimeline);
+
+            // Add Pre-PILT conditioning
+            console.log("Adding pre-PILT conditioning");
+            procedure = procedure.concat(initPavlovianLottery());
 
             // Adding PILT
             console.log("Adding PILT");
