@@ -554,7 +554,7 @@ async function load_sequences(session) {
             trial.feedback_right = trial.magnitude_right;
             trial.EV_left = trial.magnitude_left
             trial.EV_right = trial.magnitude_right;
-            trial.optimal_right = trial.magnitude_right > trial_magnitude_left;
+            trial.optimal_right = trial.magnitude_right > trial.magnitude_left;
         });
 
         if (!window.demo) {
