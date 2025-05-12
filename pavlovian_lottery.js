@@ -48,7 +48,6 @@ const PREPILT_CONFIG = {
     WINNING_HIGHLIGHT_DELAY: 450 / SPEED_UP_FACTOR,
     MAX_RESULT_DISPLAY_TIME: 4000 / SPEED_UP_FACTOR,
     CONTINUE_MESSAGE_DELAY: 1500 / SPEED_UP_FACTOR,
-    MINIMUM_RESPONSE_TIME: 1000 / SPEED_UP_FACTOR
   }
 };
 
@@ -263,11 +262,11 @@ function initPavlovianLottery() {
 
         // Find the target item position (it's the last item in our reel)
         const winningItem = document.getElementById('winning-item');
-        let targetIndex = totalItems - 1;
+        // let targetIndex = totalItems - 1;
 
         // Calculate the exact position needed to center the target in the frame
         const containerCenter = slotContainer.offsetWidth / 2;
-        const targetPosition = containerCenter - (targetIndex * itemWidth) - (itemWidth / 2) + Math.ceil(window.innerWidth * 0.01 * 1);
+        const targetPosition = containerCenter - (winningItem.offsetLeft + (winningItem.offsetWidth / 2));
 
         // Animation sequence
         setTimeout(() => {
@@ -331,7 +330,7 @@ function initPavlovianLottery() {
         rt_method: 'performance',
         persist: false,
         allow_held_key: false,
-        minimum_valid_rt: PREPILT_CONFIG.CONSTANTS.MINIMUM_RESPONSE_TIME,
+        minimum_valid_rt: PREPILT_CONFIG.CONSTANTS.CONTINUE_MESSAGE_DELAY,
       });
     }
   };
