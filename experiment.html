@@ -313,6 +313,13 @@
             console.log("Adding PILT test");
             procedure = procedure.concat(PILT_tasks.PILT_test_procedure);
 
+            // Add control timeline
+            console.log("Adding control");
+            procedure = procedure.concat(controlTimeline);
+            procedure = procedure.concat([
+                acceptability_intro,
+                acceptability_control
+            ]);
         }
 
         if (window.task === "pilt-to-test") {
