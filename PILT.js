@@ -412,8 +412,8 @@ function build_PILT_task(structure, insert_msg = true, task_name = "pilt") {
                 {
                     type: jsPsychHtmlKeyboardResponse,
                     stimulus: `
-                        <h3>Round ${i + 1} out of ${structure.length}</h3>
-                        <p>On the next round you will play to <b>${valence > 0 ? "win" : "avoid losing"} coins</b>.<p>` + 
+                        <h3>Round ${i + 1} out of ${structure.length}</h3>` +
+                        (valence != 0 ? `<p>On the next round you will play to <b>${valence > 0 ? "win" : "avoid losing"} coins</b>.<p>` : "") + 
                        ( n_stimuli === 2 ? `<p>Place your fingers on the left and right arrow keys, and <b>press both</b> to continue.</p>` :
                         `<p>Place your fingers on the left, right, and up arrow keys, and press either one to continue.</p>`),
                     choices: n_stimuli === 2 ? ['arrowright', 'arrowleft'] : ['arrowright', 'arrowleft', 'arrowup'],
