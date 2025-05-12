@@ -316,6 +316,27 @@ const vigour_PIT_bonus2 = {
   }
 };
 
+const computeRelativeVigourPITBonus = () => {
+
+    // Compute lowest and highest sum of coins possible to earn
+    
+    // Vigour task
+    const vigour_earned = jsPsych.data.get().filterCustom((trial) => trial.trialphase == "vigour_trial").select('total_reward').values.slice(-1)[0];
+    const vigour_min = jsPsych.data.get().filter({trialphase: "vigour_trial"}).values().map((value, index) => (value.timeline_variables.magnitude * 0.01 / value.timeline_variables.ratio)).reduce((sum, value) => sum + value, 0);
+    const vigour_max = jsPsych.data.get().filter({trialphase: "vigour_trial"}).values().map((value, index) => (10 * value.trial_duration / 1000 * (value.timeline_variables.magnitude * 0.01 / value.timeline_variables.ratio))).reduce((sum, value) => sum + value, 0);
+
+    // PIT task
+    const pit_earned = jsPsych.data.get().filterCustom((trial) => trial.trialphase == "pit_trial").select('total_reward').values.slice(-1)[0];
+    const pit_min = jsPsych.data.get().filter({trialphase: "pit_trial"}).values().map((value, index) => (value.timeline_variables.magnitude * 0.01 / value.timeline_variables.ratio)).reduce((sum, value) => sum + value, 0);
+    const pit_max = jsPsych.data.get().filter({trialphase: "pit_trial"}).values().map((value, index) => (10 * value.trial_duration / 1000 * (value.timeline_variables.magnitude * 0.01 / value.timeline_variables.ratio))).reduce((sum, value) => sum + value, 0);
+    
+    return {
+        earned: vigour_earned + pit_earned,
+        min: vigour_min + pit_min,
+        max: vigour_max + pit_max
+    }
+}
+
 // Instructions for comparison task
 const PITruleInstruction = {
   type: jsPsychHtmlKeyboardResponse,
