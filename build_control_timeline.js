@@ -368,7 +368,7 @@ for (let i = 0; i < explore_sequence.length; i++) {
 controlTimeline.push(controlRewardTimeline);
 
 // Add the final reward feedback
-controlTimeline.push(controlTotalReward);
+// controlTimeline.push(controlTotalReward);
 
 // Add the debriefing to the end of the experiment
 // let controlDebriefing = [];
