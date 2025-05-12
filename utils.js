@@ -721,7 +721,8 @@ function inter_block_stimulus(){
             </tr></table></div>`;
     } else {
         const earnings = Object.entries(chosen_outcomes).reduce((sum, [value, count]) => {
-            return sum + (parseFloat(value) * count);
+            // Convert string keys to numbers explicitly for reliable calculation
+            return sum + (Number(value) * count);
         }, 0);
 
         txt += `<p>Altogether on this round, you've ${earnings >= 0 ? "collected" : "lost"} coins worth £${Math.abs(earnings).toFixed(2)}.</p>`;
