@@ -9,8 +9,7 @@
  */
 
 // Define the Pavlovian stimuli and their associated rewards
-const SIMULATION_FACTOR = window.participantID.includes("simulate") ? 0.2 : 1;
-const small_coin_size = 100;
+const SPEED_UP_FACTOR = window.participantID.includes("simulate") ? 10 : 1;
 
 const PREPILT_CONFIG = {
   sequence: [{ "pav_value": -1.0 }, { "pav_value": 0.5 }, { "pav_value": -1.0 }, { "pav_value": -1.0 }, { "pav_value": 0.01 }, { "pav_value": 1.0 }, { "pav_value": 0.01 }, { "pav_value": -0.01 }, { "pav_value": 0.5 }, { "pav_value": -0.01 }, { "pav_value": 0.01 }, { "pav_value": -0.01 }, { "pav_value": 1.0 }, { "pav_value": 1.0 }, { "pav_value": -0.5 }, { "pav_value": 0.01 }, { "pav_value": -0.5 }, { "pav_value": 0.5 }, { "pav_value": -1.0 }, { "pav_value": -0.5 }, { "pav_value": 1.0 }, { "pav_value": 0.5 }, { "pav_value": -1.0 }, { "pav_value": -0.5 }, { "pav_value": -0.01 }, { "pav_value": 0.5 }, { "pav_value": 1.0 }, { "pav_value": 0.01 }, { "pav_value": -0.01 }, { "pav_value": -0.5 }],
@@ -43,12 +42,13 @@ const PREPILT_CONFIG = {
   },
 
   CONSTANTS: {
-    INITIAL_MOVEMENT_DELAY: 50 * SIMULATION_FACTOR,
-    REEL_SPIN_DURATION: 1500 * SIMULATION_FACTOR,
-    WINNING_HIGHLIGHT_DELAY: 450 * SIMULATION_FACTOR,
-    MAX_RESULT_DISPLAY_TIME: 4000 * SIMULATION_FACTOR,
-    CONTINUE_MESSAGE_DELAY: 1500 * SIMULATION_FACTOR,
-    MINIMUM_RESPONSE_TIME: 1000 * SIMULATION_FACTOR
+    SMALL_COIN_SIZE: 100,
+    INITIAL_MOVEMENT_DELAY: 50 / SPEED_UP_FACTOR,
+    REEL_SPIN_DURATION: 1500 / SPEED_UP_FACTOR,
+    WINNING_HIGHLIGHT_DELAY: 450 / SPEED_UP_FACTOR,
+    MAX_RESULT_DISPLAY_TIME: 4000 / SPEED_UP_FACTOR,
+    CONTINUE_MESSAGE_DELAY: 1500 / SPEED_UP_FACTOR,
+    MINIMUM_RESPONSE_TIME: 1000 / SPEED_UP_FACTOR
   }
 };
 
@@ -93,14 +93,14 @@ function initPavlovianLottery() {
         <div style='display: grid;'>
             <table style='width: 200px; grid-column: 2;'>
                 <tr>
-                    <td><img src='imgs/1pound.png' style='width:${small_coin_size}px; height:${small_coin_size}px;'></td>
-                    <td><img src='imgs/50pence.png' style='width:${small_coin_size}px; height:${small_coin_size}px;'></td>
-                    <td><img src='imgs/1penny.png' style='width:${small_coin_size}px; height:${small_coin_size}px;'></td>
+                    <td><img src='imgs/1pound.png' style='width:${PREPILT_CONFIG.CONSTANTS.SMALL_COIN_SIZE}px; height:${PREPILT_CONFIG.CONSTANTS.SMALL_COIN_SIZE}px;'></td>
+                    <td><img src='imgs/50pence.png' style='width:${PREPILT_CONFIG.CONSTANTS.SMALL_COIN_SIZE}px; height:${PREPILT_CONFIG.CONSTANTS.SMALL_COIN_SIZE}px;'></td>
+                    <td><img src='imgs/1penny.png' style='width:${PREPILT_CONFIG.CONSTANTS.SMALL_COIN_SIZE}px; height:${PREPILT_CONFIG.CONSTANTS.SMALL_COIN_SIZE}px;'></td>
                 </tr>
                 <tr>
-                    <td><img src='imgs/1poundbroken.png' style='width:${small_coin_size}px; height:${small_coin_size}px;'></td>
-                    <td><img src='imgs/50pencebroken.png' style='width:${small_coin_size}px; height:${small_coin_size}px;'></td>
-                    <td><img src='imgs/1pennybroken.png' style='width:${small_coin_size}px; height:${small_coin_size}px;'></td>
+                    <td><img src='imgs/1poundbroken.png' style='width:${PREPILT_CONFIG.CONSTANTS.SMALL_COIN_SIZE}px; height:${PREPILT_CONFIG.CONSTANTS.SMALL_COIN_SIZE}px;'></td>
+                    <td><img src='imgs/50pencebroken.png' style='width:${PREPILT_CONFIG.CONSTANTS.SMALL_COIN_SIZE}px; height:${PREPILT_CONFIG.CONSTANTS.SMALL_COIN_SIZE}px;'></td>
+                    <td><img src='imgs/1pennybroken.png' style='width:${PREPILT_CONFIG.CONSTANTS.SMALL_COIN_SIZE}px; height:${PREPILT_CONFIG.CONSTANTS.SMALL_COIN_SIZE}px;'></td>
                 </tr>
             </table>
         </div>
