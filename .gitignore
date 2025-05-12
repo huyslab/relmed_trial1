@@ -9,3 +9,6 @@ relmed_vigour_task.code-workspace
 node_modules/
 package-lock.json
 test-results/
+
+# Ignore vscode files
+launch.json
