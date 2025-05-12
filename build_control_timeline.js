@@ -67,7 +67,7 @@ explore_sequence.forEach(trial => {
         on_start: function (trial) {
           const last_trialphase = jsPsych.data.getLastTrialData().values()[0].trialphase;
           if (last_trialphase === "control_confidence") {
-            trial.explore_decision += 0;
+            trial.explore_decision += 2000;
           }
         },
         on_finish: function (data) {
@@ -137,6 +137,12 @@ predict_sequence.forEach(trial => {
         },
         post_trial_gap: 0,
         save_timeline_variables: true,
+        on_start: function (trial) {
+          const last_trialphase = jsPsych.data.getLastTrialData().values()[0].trialphase;
+          if (last_trialphase === "control_explore") {
+            trial.predict_decision += 2000;
+          }
+        },
         on_finish: function (data) {
           const n_trials = jsPsych.data.get().filter([{trialphase: "control_explore"}, {trialphase: "control_predict_homebase"}, {trialphase: "control_reward"}]).count();
           data.n_control_trials = n_trials;
@@ -210,12 +216,6 @@ reward_sequence.forEach((trial, index) => {
     },
     post_trial_gap: 0,
     save_timeline_variables: true,
-    on_start: function (trial) {
-      const last_trialphase = jsPsych.data.getLastTrialData().values()[0].trialphase;
-      if (last_trialphase === "control_controllability" || last_trialphase === "control_reward_prompt") {
-        trial.reward_decision += 0;
-      }
-    },
     on_finish: function (data) {
       const n_trials = jsPsych.data.get().filter([{trialphase: "control_explore"}, {trialphase: "control_predict_homebase"}, {trialphase: "control_reward"}]).count();
       data.n_control_trials = n_trials;
