@@ -103,7 +103,7 @@ function initPavlovianLottery() {
                 </tr>
             </table>
         </div>
-        <p>Each coin or broken coin you see during the lottery will contribute to your final bonus at the end of today's tasks.</p>
+        <p>Your bonus payment will depend on the coins you find in this task and the next ones. Each coin adds to your bonus, but broken coins reduce it.</p>
       `
     ],
     show_clickable_nav: true,
