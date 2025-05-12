@@ -19,6 +19,8 @@ const CONTROL_CONFIG = {
   scale: 2,
 
   i1_name: {
+    "1": "banana",
+    "2": "???",
     wk0: "banana",
     wk2: "???",
     wk4: "???",
