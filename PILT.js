@@ -132,8 +132,8 @@ const test_trial = (task) => {
                     stimulus_right: jsPsych.timelineVariable("stimulus_right"),
                     same_valence: jsPsych.timelineVariable("same_valence"),
                     same_block: jsPsych.timelineVariable("same_block"),
-                    magnitude_left: jsPsych.timelineVariable("magnitude_left"),
-                    magnitude_right: jsPsych.timelineVariable("magnitude_right"),
+                    EV_left: jsPsych.timelineVariable("EV_left"),
+                    EV_right: jsPsych.timelineVariable("EV_right"),
                     original_block_left: jsPsych.timelineVariable("original_block_left"),
                     original_block_right: jsPsych.timelineVariable("original_block_right"),
                 },
@@ -554,6 +554,8 @@ async function load_sequences(session) {
             trial.block = "pavlovian";
             trial.feedback_left = trial.magnitude_left;
             trial.feedback_right = trial.magnitude_right;
+            trial.EV_left = trial.magnitude_left
+            trial.EV_right = trial.magnitude_right;
         });
 
         if (!window.demo) {
@@ -576,7 +578,7 @@ function return_PILT_full_sequence(PILT_structure, PILT_test_structure) {
     let PILT_procedure = [];
 
     // Add instructions
-    PILT_procedure = PILT_procedure.concat(prepare_PILT_instructions());
+    // PILT_procedure = PILT_procedure.concat(prepare_PILT_instructions());
 
     // Add PILT
     if (PILT_structure != null){
