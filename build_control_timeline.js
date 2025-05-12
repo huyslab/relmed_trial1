@@ -291,6 +291,21 @@ controlRewardTimeline[0]["on_timeline_start"] = () => {
 }
 
 // Add feedback on the final rewards in total
+const computeRelativeControlBonus = () => {
+
+    // Compute lowest and highest sum of coins possible to earn
+    
+    const earned_sum = jsPsych.data.get().filter({ trialphase: 'control_reward' }).select('reward').sum();
+    const min_sum = 0;
+    const max_sum = jsPsych.data.get().filter({trialphase: 'control_reward'}).select('timeline_variables').values.reduce((sum, value) => sum + value.reward_number, 0);
+    
+    return {
+        earned: earned_sum,
+        min: min_sum,
+        max: max_sum
+    }
+}
+
 let controlTotalReward = {
   type: jsPsychHtmlKeyboardResponse,
   stimulus: function () {
@@ -374,7 +389,7 @@ for (let i = 0; i < explore_sequence.length; i++) {
 controlTimeline.push(controlRewardTimeline);
 
 // Add the final reward feedback
-controlTimeline.push(controlTotalReward);
+// controlTimeline.push(controlTotalReward);
 
 // Add the debriefing to the end of the experiment
 controlTimeline.push(controlDebriefing);
