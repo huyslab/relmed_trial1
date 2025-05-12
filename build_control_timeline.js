@@ -353,12 +353,6 @@ let controlTotalReward = {
   }
 };
 
-// Add debriefing questions
-let controlDebriefing = [];
-controlDebriefing.push(control_acceptability_intro);
-controlDebriefing.push(acceptability_control);
-controlDebriefing.push(control_debrief);
-
 // Assembling the control timeline
 let controlTimeline = [];
 // Add the preload
@@ -392,4 +386,8 @@ controlTimeline.push(controlRewardTimeline);
 // controlTimeline.push(controlTotalReward);
 
 // Add the debriefing to the end of the experiment
-controlTimeline.push(controlDebriefing);
+// let controlDebriefing = [];
+// controlDebriefing.push(control_acceptability_intro);
+// controlDebriefing.push(acceptability_control);
+// controlDebriefing.push(control_debrief);
+// controlTimeline.push(controlDebriefing);
