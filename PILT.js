@@ -61,7 +61,7 @@ const inter_block_msg = {
 
         const n_stimuli = jsPsych.data.get().filter({ trial_type: "PILT" }).last(1).select("n_stimuli").values[0];
 
-        return n_stimuli === 2 ? ['arrowright', 'arrowleft'] : ['arrowright', 'arrowleft', 'arrowup']
+        return n_stimuli === 2 ? ['arrowright'] : ['arrowright', 'arrowleft', 'arrowup']
     },
     css_classes: ['instructions'],
     stimulus: inter_block_stimulus,
@@ -288,9 +288,7 @@ const PILT_trial = (task) => {
                 stimulus_group_id: jsPsych.timelineVariable('stimulus_group_id'),
                 valence: jsPsych.timelineVariable('valence'),
                 n_groups: jsPsych.timelineVariable('n_groups'),
-                rest_1pound: jsPsych.timelineVariable('rest_1pound'),
-                rest_50pence: jsPsych.timelineVariable('rest_50pence'),
-                rest_1penny: jsPsych.timelineVariable('rest_1penny')
+                rest: jsPsych.timelineVariable('rest'),
             },
             on_finish: function(data) {
                 if (data.response === "noresp") {
