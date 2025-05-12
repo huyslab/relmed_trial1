@@ -139,7 +139,7 @@ predict_sequence.forEach(trial => {
         save_timeline_variables: true,
         on_start: function (trial) {
           const last_trialphase = jsPsych.data.getLastTrialData().values()[0].trialphase;
-          if (last_trialphase === "control_explore") {
+          if (last_trialphase === "control_explore_feedback") {
             trial.predict_decision += 2000;
           }
         },

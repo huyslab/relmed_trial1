@@ -591,7 +591,6 @@ controlInstructionTrial = {
             
             // Calculate the distance to move the ship
             const distance = islandImg.offsetWidth + shipImg.offsetWidth / 4;
-            console.log(distance);
 
             // Determine if ship should be flipped based on which side it starts from
             // Ships on the left are already flipped with scaleX(-1) in the CSS
