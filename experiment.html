@@ -321,7 +321,7 @@
             // PILT & Pavlovian test 
             console.log("Adding PILT test");
             procedure = procedure.concat(PILT_tasks.PILT_test_procedure);
-
+            
             // Add control timeline
             console.log("Adding control");
             procedure = procedure.concat(controlTimeline);
@@ -329,6 +329,10 @@
                 acceptability_intro,
                 acceptability_control
             ]);
+
+            // Final bonus message
+            console.log("Adding bonus trial");
+            precedure.push(bonus_trial);
         }
 
         if (window.task === "pilt-to-test") {

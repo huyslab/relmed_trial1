@@ -93,7 +93,7 @@ const test_trial = (task) => {
                 feedback_left: jsPsych.timelineVariable('feedback_left'),
                 feedback_right: jsPsych.timelineVariable('feedback_right'),
                 feedback_middle: '',
-                optimal_right: false,
+                optimal_right: jsPsych.timelineVariable('optimal_right'),
                 optimal_side: '',
                 response_deadline: window.defaul_response_deadline,
                 n_stimuli: 2,
@@ -663,5 +663,23 @@ function return_PILT_full_sequence(PILT_structure, PILT_test_structure) {
         // WM_test_procedure: WM_test_procedure,
         // LTM_procedure: LTM_procedure,
         // LTM_test_procedure: LTM_test_procedure
+    }
+}
+
+const computeRelativePILTBonus = () => {
+
+    // Compute lowest and highest sum of coins possible to earn
+    const feedback_right = jsPsych.data.get().filter({trial_type: "PILT"}).select("feedback_right").values;
+    const feedback_left = jsPsych.data.get().filter({trial_type: "PILT"}).select("feedback_left").values;
+    const max_sum = feedback_right.map((value, index) => Math.max(value, feedback_left[index])).reduce((sum, value) => sum + value, 0);
+    const min_sum = feedback_right.map((value, index) => Math.min(value, feedback_left[index])).reduce((sum, value) => sum + value, 0);
+
+    // Compute the actual sum of coins
+    const earned_sum = jsPsych.data.get().filter({trial_type: "PILT"}).select("chosen_feedback").sum();
+
+    return {
+        earned: earned_sum, 
+        min: min_sum, 
+        max: max_sum
     }
 }

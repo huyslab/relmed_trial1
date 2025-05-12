@@ -721,7 +721,8 @@ function inter_block_stimulus(){
             </tr></table></div>`;
     } else {
         const earnings = Object.entries(chosen_outcomes).reduce((sum, [value, count]) => {
-            return sum + (parseFloat(value) * count);
+            // Convert string keys to numbers explicitly for reliable calculation
+            return sum + (Number(value) * count);
         }, 0);
 
         txt += `<p>Altogether on this round, you've ${earnings >= 0 ? "collected" : "lost"} coins worth £${Math.abs(earnings).toFixed(2)}.</p>`;
@@ -907,3 +908,43 @@ function setupMultiKeysListener(keysToTrack, callback_function, targetElement = 
         cleanup
     };
 }
+
+function computeTotalBonus(){
+    const pilt_bonus = computeRelativePILTBonus();
+    const vigour_pit_bonus = computeRelativeVigourPITBonus();
+    const control_bonus = computeRelativeControlBonus();
+
+    const total_earned = pilt_bonus["earned"] + vigour_pit_bonus["earned"] + control_bonus["earned"];
+    const min_total = pilt_bonus["min"] + vigour_pit_bonus["min"] + control_bonus["min"];
+    const max_total = pilt_bonus["max"] + vigour_pit_bonus["max"] + control_bonus["max"];
+    
+    return ((total_earned - min_total) / (max_total - min_total) * 3);
+}
+
+const bonus_trial = {
+    type: jsPsychHtmlButtonResponse,
+    css_classes: ['instructions'],
+    stimulus: function (trial) {
+        let stimulus =  "Congratulations! You are nearly at the end of this session!"      
+        const total_bonus = computeTotalBonus();
+        stimulus += `
+                <p>It is time to reveal your total bonus payment for this session.</p>
+                <p>Altogether, you will earn an extra ${total_bonus.toLocaleString('en-GB', { style: 'currency', currency: 'GBP' })}.</p>
+            `;
+        return stimulus;
+    },
+    choices: ['Continue'],
+    data: { trialphase: 'vigour_bonus' },
+    on_start: () => {
+      updateState(`bonus_trial`);
+    },
+    on_finish: (data) => {
+      data.total_bonus = computeTotalBonus().toFixed(2);
+      
+      updateState('bonus_trial_finished');
+    },
+    simulation_options: {
+      simulate: false
+    }
+  };
+  
