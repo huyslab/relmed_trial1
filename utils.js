@@ -577,24 +577,24 @@ function computeBestRest(structure){
     for (let b=0; b<structure.length; b++){
 
         // Initiate counter at last trial as zero
-        structure[b][structure[b].length - 1].rest_1pound = 0;
-        structure[b][structure[b].length - 1].rest_50pence = 0;
-        structure[b][structure[b].length - 1].rest_1penny = 0;
+        structure[b][structure[b].length - 1].rest = {};
 
         // Compute reverse cumulative sums
-        for (let i=structure[b].length - 2; i>=0; i--){
+        for (let i = structure[b].length - 2; i >= 0; i--) {
             const next_optimal_outcome = (structure[b][i + 1].n_stimuli === 2) ? 
-                (structure[b][i + 1].optimal_right === 1 ? structure[b][i + 1].feedback_right : structure[b][i + 1].feedback_left) :
-                (structure[b][i + 1][`feedback_${structure[b][i + 1].optimal_side}`])
+            (structure[b][i + 1].optimal_right ? structure[b][i + 1].feedback_right : structure[b][i + 1].feedback_left) :
+            (structure[b][i + 1][`feedback_${structure[b][i + 1].optimal_side}`]);
 
-            structure[b][i].rest_1pound = structure[b][i + 1].rest_1pound + 
-                (Math.abs(next_optimal_outcome) == 1);
+            // Copy the rest object from the next trial
+            structure[b][i].rest = { ...structure[b][i + 1].rest };
 
-            structure[b][i].rest_50pence = structure[b][i + 1].rest_50pence + 
-                (Math.abs(next_optimal_outcome) == 0.5);
-
-            structure[b][i].rest_1penny = structure[b][i + 1].rest_1penny + 
-                (Math.abs(next_optimal_outcome) == 0.01);
+            // Update the count for the next optimal outcome
+            const outcomeKey = next_optimal_outcome.toString();
+            if (structure[b][i].rest[outcomeKey]) {
+            structure[b][i].rest[outcomeKey]++;
+            } else {
+            structure[b][i].rest[outcomeKey] = 1;
+            }
         }
     }
 }
@@ -657,22 +657,24 @@ function inter_block_stimulus(){
         
         txt += `<p>You've found the better ${n_groups > 1 ? "cards" : "card"}.</p><p>You will skip the remaining turns and `;
         
-        txt += valence == 1 ? `collect the remaining coins hidden under ` : 
+        txt += valence >= 0 ? `collect the remaining coins hidden under ` : 
             `lose only the remaining coins hidden under `;
 
         txt +=  n_groups > 1 ? "these cards." : "this card."
         
-        txt += `<p><img src='imgs/safe.png' style='width:100px; height:100px;'></p>
-        <p>Altogether, these coins were ${valence == 1 ? "added to your safe" : "broken in your safe"} on this round:<p>`
+        if (valence != 0){
+             txt += `<p>Altogether, these coins were ${valence == 1 ? "added to your safe" : "broken in your safe"} on this round:<p>`;
+        }
+       
         
         // Add rest to outcomes
         if (window.task !== "screening"){
-            chosen_outcomes[valence * 1] += last_trial.select('rest_1pound').values[0];
-            chosen_outcomes[valence * 0.5] += last_trial.select('rest_50pence').values[0];
-            chosen_outcomes[valence * 0.01] += last_trial.select('rest_1penny').values[0];    
+            Object.keys(last_trial.select('rest').values[0]).forEach(key => {
+                chosen_outcomes[key] += last_trial.select('rest').values[0][key];
+            });
         }
 
-    } else {
+    } else if (valence != 0) {
         txt += `<p><img src='imgs/safe.png' style='width:100px; height:100px;'></p>
         <p>These coins ${isValidNumber(block) ? "were" : "would have been"} 
         ${valence == 1 ? "added to your safe" : "broken in your safe"} on this round:</p>`
@@ -698,7 +700,7 @@ function inter_block_stimulus(){
             
         txt += `<td>${isValidNumber(chosen_outcomes[0.01]) ? chosen_outcomes[0.01] : 0}</td>
             </tr></table></div>`;
-    } else {
+    } else if (valence == -1) {
         txt += `<div style='display: grid'><table>
             <tr><td><img src='imgs/1poundbroken.png' style='width:${small_coin_size}px; height:${small_coin_size}px;'></td>`
             
@@ -717,10 +719,17 @@ function inter_block_stimulus(){
             
         txt += `<td>${isValidNumber(chosen_outcomes[-0.01]) ? chosen_outcomes[-0.01] : 0}</td>
             </tr></table></div>`;
+    } else {
+        const earnings = Object.entries(chosen_outcomes).reduce((sum, [value, count]) => {
+            return sum + (parseFloat(value) * count);
+        }, 0);
+
+        txt += `<p>Altogether on this round, you've ${earnings >= 0 ? "collected" : "lost"} coins worth £${Math.abs(earnings).toFixed(2)}.</p>`;
+        
     }
 
     if (isValidNumber(block)){
-        txt += n_stimuli === 2 ? `<p>Place your fingers on the left and right arrow keys, and press either one to continue.</p>` :
+        txt += n_stimuli === 2 ? `<p>Press the right arrow to continue.</p>` :
          `<p>Place your fingers on the left, right, and up arrow keys, and press either one to continue.</p>`
     }
 

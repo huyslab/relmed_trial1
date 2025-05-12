@@ -61,7 +61,7 @@ const inter_block_msg = {
 
         const n_stimuli = jsPsych.data.get().filter({ trial_type: "PILT" }).last(1).select("n_stimuli").values[0];
 
-        return n_stimuli === 2 ? ['arrowright', 'arrowleft'] : ['arrowright', 'arrowleft', 'arrowup']
+        return n_stimuli === 2 ? ['arrowright'] : ['arrowright', 'arrowleft', 'arrowup']
     },
     css_classes: ['instructions'],
     stimulus: inter_block_stimulus,
@@ -288,9 +288,7 @@ const PILT_trial = (task) => {
                 stimulus_group_id: jsPsych.timelineVariable('stimulus_group_id'),
                 valence: jsPsych.timelineVariable('valence'),
                 n_groups: jsPsych.timelineVariable('n_groups'),
-                rest_1pound: jsPsych.timelineVariable('rest_1pound'),
-                rest_50pence: jsPsych.timelineVariable('rest_50pence'),
-                rest_1penny: jsPsych.timelineVariable('rest_1penny')
+                rest: jsPsych.timelineVariable('rest'),
             },
             on_finish: function(data) {
                 if (data.response === "noresp") {
@@ -412,8 +410,8 @@ function build_PILT_task(structure, insert_msg = true, task_name = "pilt") {
                 {
                     type: jsPsychHtmlKeyboardResponse,
                     stimulus: `
-                        <h3>Round ${i + 1} out of ${structure.length}</h3>
-                        <p>On the next round you will play to <b>${valence > 0 ? "win" : "avoid losing"} coins</b>.<p>` + 
+                        <h3>Round ${i + 1} out of ${structure.length}</h3>` +
+                        (valence != 0 ? `<p>On the next round you will play to <b>${valence > 0 ? "win" : "avoid losing"} coins</b>.<p>` : "") + 
                        ( n_stimuli === 2 ? `<p>Place your fingers on the left and right arrow keys, and <b>press both</b> to continue.</p>` :
                         `<p>Place your fingers on the left, right, and up arrow keys, and press either one to continue.</p>`),
                     choices: n_stimuli === 2 ? ['arrowright', 'arrowleft'] : ['arrowright', 'arrowleft', 'arrowup'],
@@ -578,7 +576,7 @@ function return_PILT_full_sequence(PILT_structure, PILT_test_structure) {
     let PILT_procedure = [];
 
     // Add instructions
-    // PILT_procedure = PILT_procedure.concat(prepare_PILT_instructions());
+    PILT_procedure = PILT_procedure.concat(prepare_PILT_instructions());
 
     // Add PILT
     if (PILT_structure != null){
