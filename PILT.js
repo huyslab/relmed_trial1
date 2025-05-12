@@ -666,16 +666,16 @@ function return_PILT_full_sequence(PILT_structure, PILT_test_structure) {
     }
 }
 
-const computeRelativePILTBonus = () => {
+const computeRelativePILTBonus2 = () => {
 
     // Compute lowest and highest sum of coins possible to earn
-    const feedback_right = jsPsych.date.get().filter({trial_type: "PILT"}).select("feeback_right");
-    const feedback_left = jsPsych.date.get().filter({trial_type: "PILT"}).select("feedback_left");
+    const feedback_right = jsPsych.data.get().filter({trial_type: "PILT"}).select("feedback_right").values;
+    const feedback_left = jsPsych.data.get().filter({trial_type: "PILT"}).select("feedback_left").values;
     const max_sum = feedback_right.map((value, index) => Math.max(value, feedback_left[index])).reduce((sum, value) => sum + value, 0);
     const min_sum = feedback_right.map((value, index) => Math.min(value, feedback_left[index])).reduce((sum, value) => sum + value, 0);
 
     // Compute the actual sum of coins
-    const earned_sum = jsPsych.date.get().filter({trial_type: "PILT"}).select("chosen_feedback");
+    const earned_sum = jsPsych.data.get().filter({trial_type: "PILT"}).select("chosen_feedback");
 
     return earned_sum, min_sum, max_sum
 }
