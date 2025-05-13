@@ -56,7 +56,7 @@ explore_sequence.forEach(trial => {
         current: jsPsych.timelineVariable('current'),
         explore_decision: () => {
           if (can_be_warned("control_explore")) {
-              return window.default_response_deadline
+              return window.relemd_default_response_deadline
           } else {
               return window.default_long_response_deadline
           }
@@ -66,7 +66,7 @@ explore_sequence.forEach(trial => {
         save_timeline_variables: true,
         on_start: function (trial) {
           const last_trialphase = jsPsych.data.getLastTrialData().values()[0].trialphase;
-          if (last_trialphase === "control_confidence") {
+          if (last_trialphase === "control_confidence" || last_trialphase === "control_controllability") {
             trial.explore_decision += 2000;
           }
         },
@@ -130,7 +130,7 @@ predict_sequence.forEach(trial => {
         ship: jsPsych.timelineVariable('ship'),
         predict_decision: () => {
           if (can_be_warned("control_predict_homebase")) {
-              return window.default_response_deadline
+              return window.relemd_default_response_deadline
           } else {
               return window.default_long_response_deadline
           }
@@ -209,7 +209,7 @@ reward_sequence.forEach((trial, index) => {
     reward_number: jsPsych.timelineVariable('reward_number'),
     reward_decision: () => {
       if (can_be_warned("control_reward")) {
-          return window.default_response_deadline
+          return window.relemd_default_response_deadline
       } else {
           return window.default_long_response_deadline
       }
