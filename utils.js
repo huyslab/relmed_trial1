@@ -1121,7 +1121,7 @@ const bonus_trial = {
       updateState('bonus_trial_end');
     },
     simulation_options: {
-      simulate: false
+      simulate: true
     }
   };
   
