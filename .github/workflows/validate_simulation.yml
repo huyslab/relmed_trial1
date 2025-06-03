@@ -1,0 +1,65 @@
+name: Nightly Task Simulation Playwright Tests
+on:
+  schedule:
+    - cron: '0 2 * * *'  # Daily at 2 AM UTC
+  workflow_dispatch:
+
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        shard: [1/4, 2/4, 3/4, 4/4]
+    steps:
+    - uses: actions/checkout@v4
+    
+    - uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+        cache: 'npm'  # Cache npm dependencies
+    
+    # Cache Playwright browsers (major time saver)
+    - name: Cache Playwright browsers
+      uses: actions/cache@v4
+      id: playwright-cache
+      with:
+        path: |
+          ~/.cache/ms-playwright
+        key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+        restore-keys: |
+          playwright-${{ runner.os }}-
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+      # Only install if cache miss
+      if: steps.playwright-cache.outputs.cache-hit != 'true'
+    
+    - name: Install Playwright system dependencies
+      run: npx playwright install-deps
+      # Always run this as system deps might differ
+    
+    - name: Run Playwright tests
+      run: npx playwright test --project="RELMED simulation" --shard=${{ matrix.shard }}
+      env:
+        CI: true
+    
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      if: ${{ !cancelled() }}
+      with:
+        name: playwright-report-${{ matrix.shard }}
+        path: |
+          playwright-report/
+          simulation-test-results.json
+        retention-days: 30
+    
+    # Merge reports from all shards
+    - name: Merge reports
+      if: ${{ matrix.shard == '1/4' }}
+      run: |
+        npx playwright merge-reports --reporter html ./playwright-report
+      continue-on-error: true
