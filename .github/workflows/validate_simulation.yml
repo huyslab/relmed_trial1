@@ -1,7 +1,5 @@
 name: Nightly Task Simulation Playwright Tests
 on:
-  push:
-    branches: [test-*, feature/*, 245-*]  # Only feature branches
   schedule:
     - cron: '0 2 * * *'  # Daily at 2 AM UTC
   workflow_dispatch:
@@ -11,8 +9,10 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        shard: [1/4, 2/4, 3/4, 4/4]
+        shard: [1, 2, 3, 4]
+        shardTotal: [4]
     steps:
     - uses: actions/checkout@v4
     
@@ -45,7 +45,7 @@ jobs:
       # Always run this as system deps might differ
     
     - name: Run Playwright tests
-      run: npx playwright test --project="RELMED simulation" --shard=${{ matrix.shard }}
+      run: npx playwright test --project="RELMED simulation" --shard=${{ matrix.shard }}/${{ matrix.shardTotal }}
       env:
         CI: true
     
@@ -59,9 +59,27 @@ jobs:
           simulation-test-results.json
         retention-days: 30
     
-    # Merge reports from all shards
-    - name: Merge reports
-      if: ${{ matrix.shard == '1/4' }}
+  merge-reports:
+    if: ${{ !cancelled() }}
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+        cache: 'npm'
+    - run: npm ci
+    - name: Download all artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: all-reports
+    - name: Merge HTML reports
       run: |
-        npx playwright merge-reports --reporter html ./playwright-report
+        npx playwright merge-reports --reporter html all-reports/playwright-report-shard-*/playwright-report
       continue-on-error: true
+    - name: Upload merged report
+      uses: actions/upload-artifact@v4
+      with:
+        name: merged-playwright-report
+        path: playwright-report/
