@@ -1,9 +1,9 @@
-name: Nightly Task Simulation Playwright Tests
+name: Weekly Task Simulation Playwright Tests
 on:
   push:
     branches: [test-*, feature/*, 245-*]  # Only feature branches
   schedule:
-    - cron: '0 2 * * *'  # Daily at 2 AM UTC
+    - cron: '0 2 * * 0'  # Weekly on Sundays at 2 AM UTC
   workflow_dispatch:
 
 jobs:
@@ -13,8 +13,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shard: [1, 2, 3, 4]
-        shardTotal: [4]
+        shard: [1, 2, 3, 4, 5]
+        shardTotal: [5]
     steps:
     - uses: actions/checkout@v4
     
@@ -72,16 +72,83 @@ jobs:
         node-version: lts/*
         cache: 'npm'
     - run: npm ci
+    
     - name: Download all artifacts
       uses: actions/download-artifact@v4
       with:
         path: all-reports
+    
     - name: Merge HTML reports
       run: |
-        npx playwright merge-reports --reporter html all-reports/playwright-report-shard-*/playwright-report
+        REPORT_DIRS=$(find all-reports -name "playwright-report" -type d)
+        if [ -n "$REPORT_DIRS" ]; then
+          npx playwright merge-reports --reporter html $REPORT_DIRS
+        fi
       continue-on-error: true
-    - name: Upload merged report
+    
+    - name: Merge simulation results
+      run: |
+        node -e "
+          const fs = require('fs');
+          const path = require('path');
+          
+          // Find all simulation result files
+          const glob = require('glob');
+          const jsonFiles = glob.sync('all-reports/*/simulation-test-results.json');
+          console.log('Found JSON files:', jsonFiles);
+          
+          // Create a map to merge results by session+task key
+          const mergedResults = new Map();
+          
+          jsonFiles.forEach(file => {
+            try {
+              const data = JSON.parse(fs.readFileSync(file, 'utf8'));
+              console.log(\`Processing \${file}: \${data.length} entries\`);
+              
+              data.forEach(entry => {
+                const key = \`\${entry.session}|\${entry.task}\`;
+                
+                if (mergedResults.has(key)) {
+                  // Merge browser results - keep non-null values
+                  const existing = mergedResults.get(key);
+                  entry.chromium = entry.chromium !== null ? entry.chromium : existing.chromium;
+                  entry.firefox = entry.firefox !== null ? entry.firefox : existing.firefox;
+                  entry.webkit = entry.webkit !== null ? entry.webkit : existing.webkit;
+                }
+                
+                mergedResults.set(key, entry);
+              });
+            } catch (e) {
+              console.error(\`Error reading \${file}:\`, e.message);
+            }
+          });
+          
+          // Convert back to array and sort by session, then task
+          const finalResults = Array.from(mergedResults.values()).sort((a, b) => {
+            if (a.session !== b.session) return a.session.localeCompare(b.session);
+            return a.task.localeCompare(b.task);
+          });
+          
+          fs.writeFileSync('simulation-test-results-merged.json', JSON.stringify(finalResults, null, 2));
+          console.log(\`Merged results: \${finalResults.length} total entries\`);
+          
+          // Show summary
+          const summary = {};
+          finalResults.forEach(entry => {
+            const key = \`\${entry.session}/\${entry.task}\`;
+            summary[key] = {
+              chromium: entry.chromium,
+              firefox: entry.firefox, 
+              webkit: entry.webkit
+            };
+          });
+          console.log('Summary:', JSON.stringify(summary, null, 2));
+        "
+    
+    - name: Upload merged results
       uses: actions/upload-artifact@v4
       with:
-        name: merged-playwright-report
-        path: playwright-report/
+        name: merged-test-results
+        path: |
+          playwright-report/
+          simulation-test-results-merged.json
