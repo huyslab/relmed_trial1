@@ -1038,7 +1038,7 @@ function updateBonusState() {
         min: updated_session_state_obj[window.task].min || 0,
         max: updated_session_state_obj[window.task].max || 0
     };
-    // console.log(`Last session bonus for ${window.task}:`, prevBonus);
+    console.log(`Last saved bonus for ${window.task}:`, prevBonus);
 
     // Get task-specific bonus data
     const taskBonus = getTaskBonusData(window.task);
@@ -1059,7 +1059,7 @@ function updateBonusState() {
     }
 
     // Send the updated state back to the parent window
-    // console.log("To-be-updated session bonus:", updated_session_state_obj);
+    console.log("To-be-updated bonus:", updated_session_state_obj);
     postToParent({
         session_state: JSON.stringify(updated_session_state_obj)
     });
