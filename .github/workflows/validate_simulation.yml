@@ -46,13 +46,18 @@ jobs:
       run: npx playwright install-deps
       # Always run this as system deps might differ
     
-    # In your test workflow
+    - name: Run Playwright tests
+      run: npx playwright test --project="RELMED simulation" --shard=${{ matrix.shard }}/${{ matrix.shardTotal }}
+      env:
+        CI: true
+
+        # In your test workflow
     - name: Rename results file for shard
       run: |
         if [ -f "simulation-test-results.json" ]; then
           mv simulation-test-results.json simulation-test-results-shard-${{ matrix.shard }}.json
         fi
-
+    
     - name: Upload test results
       uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
