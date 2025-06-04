@@ -10,6 +10,7 @@ node_modules/
 test-results/
 
 # Playwright
+/playwright-report/
 /blob-report/
 /playwright/.cache/
 # Ignore vscode files

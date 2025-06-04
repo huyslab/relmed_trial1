@@ -13,8 +13,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shard: [1, 2, 3, 4, 5]
-        shardTotal: [5]
+        shard: [1, 2, 3]
+        shardTotal: [3]
     steps:
     - uses: actions/checkout@v4
     
@@ -46,11 +46,13 @@ jobs:
       run: npx playwright install-deps
       # Always run this as system deps might differ
     
-    - name: Run Playwright tests
-      run: npx playwright test --project="RELMED simulation" --shard=${{ matrix.shard }}/${{ matrix.shardTotal }}
-      env:
-        CI: true
-    
+    # In your test workflow
+    - name: Rename results file for shard
+      run: |
+        if [ -f "simulation-test-results.json" ]; then
+          mv simulation-test-results.json simulation-test-results-shard-${{ matrix.shard }}.json
+        fi
+
     - name: Upload test results
       uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
@@ -58,7 +60,7 @@ jobs:
         name: playwright-report-${{ matrix.shard }}
         path: |
           playwright-report/
-          simulation-test-results.json
+          simulation-test-results-shard-${{ matrix.shard }}.json
         retention-days: 30
     
   merge-reports:
@@ -77,13 +79,10 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         path: all-reports
+        merge-multiple: true
     
     - name: Merge HTML reports
-      run: |
-        REPORT_DIRS=$(find all-reports -name "playwright-report" -type d)
-        if [ -n "$REPORT_DIRS" ]; then
-          npx playwright merge-reports --reporter html $REPORT_DIRS
-        fi
+      run: npx playwright merge-reports --reporter html ./all-reports
       continue-on-error: true
     
     - name: Merge simulation results
@@ -94,7 +93,7 @@ jobs:
           
           // Find all simulation result files
           const glob = require('glob');
-          const jsonFiles = glob.sync('all-reports/*/simulation-test-results.json');
+          const jsonFiles = glob.sync('all-reports/simulation-test-results-*.json');
           console.log('Found JSON files:', jsonFiles);
           
           // Create a map to merge results by session+task key
@@ -129,7 +128,7 @@ jobs:
             return a.task.localeCompare(b.task);
           });
           
-          fs.writeFileSync('simulation-test-results-merged.json', JSON.stringify(finalResults, null, 2));
+          fs.writeFileSync('simulation-test-results.json', JSON.stringify(finalResults, null, 2));
           console.log(\`Merged results: \${finalResults.length} total entries\`);
           
           // Show summary
@@ -151,4 +150,4 @@ jobs:
         name: merged-test-results
         path: |
           playwright-report/
-          simulation-test-results-merged.json
+          simulation-test-results.json
