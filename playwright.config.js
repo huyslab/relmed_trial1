@@ -10,7 +10,7 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 2 : 12,
-  reporter: process.env.CI ? [['html'], ['github']] : 'html',
+  reporter: process.env.CI ? [['blob'], ['github']] : 'html',
   
   use: {
     trace: 'on-first-retry',

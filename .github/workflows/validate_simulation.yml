@@ -13,8 +13,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shard: [1, 2, 3]
-        shardTotal: [3]
+        shard: [1, 2, 3, 4]
+        shardTotal: [4]
     steps:
     - uses: actions/checkout@v4
     
