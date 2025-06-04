@@ -1,5 +1,4 @@
 const { test, expect } = require('@playwright/test');
-
 const fs = require('fs');
 const url = require('url');
 
@@ -20,8 +19,7 @@ const PARAMS = [
 );
 
 // Define browsers to test with
-// const browsers = ['chromium', 'firefox', 'webkit'];
-const browsers = ['chromium'];
+const browsers = ['chromium', 'firefox', 'webkit'];
 
 // Results file path
 const RESULTS_FILE = 'simulation-test-results.json';

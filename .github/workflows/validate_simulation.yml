@@ -1,7 +1,5 @@
 name: Weekly Task Simulation Playwright Tests
 on:
-  push:
-    branches: [test-*, feature/*, 245-*]  # Only feature branches
   schedule:
     - cron: '0 2 * * 0'  # Weekly on Sundays at 2 AM UTC
   workflow_dispatch:

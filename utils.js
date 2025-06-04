@@ -1136,7 +1136,7 @@ const bonus_trial = {
       updateState('bonus_trial_end');
     },
     simulation_options: {
-      simulate: true
+      simulate: window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' // Simulate the bonus trial in development mode
     }
   };
   
