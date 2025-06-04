@@ -93,7 +93,7 @@ jobs:
         ls -la all-reports/
     
     - name: Merge HTML reports
-      run: npx playwright merge-reports --reporter html ./all-reports
+      run: npx playwright merge-reports --reporter html ./all-reports/blob-report
       continue-on-error: true
     
     - name: Merge simulation results

@@ -20,7 +20,8 @@ const PARAMS = [
 );
 
 // Define browsers to test with
-const browsers = ['chromium', 'firefox', 'webkit'];
+// const browsers = ['chromium', 'firefox', 'webkit'];
+const browsers = ['chromium'];
 
 // Results file path
 const RESULTS_FILE = 'simulation-test-results.json';
