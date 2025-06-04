@@ -60,6 +60,12 @@ function separateWords(input, counter, div_counter, submit_bttn, q_name, jsPsych
     let text = input.value
     text = text.replace(/\s\s+/g, ' ');
 
+    // Replace commas, semi-colons, and periods with spaces
+    text = text.replace(/[,;.]/g, ' ');
+    
+    // Replace multiple spaces with a single space
+    text = text.replace(/\s\s+/g, ' ');
+
     // count words
     let words = text.split(" ");
     if (words.length > 0) {
