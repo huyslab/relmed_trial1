@@ -64,7 +64,7 @@ jobs:
       with:
         name: playwright-report-${{ matrix.shard }}
         path: |
-          playwright-report/
+          blob-report/
           simulation-test-results-shard-${{ matrix.shard }}.json
         retention-days: 30
     
@@ -85,6 +85,12 @@ jobs:
       with:
         path: all-reports
         merge-multiple: true
+
+    - name: Debug - List downloaded files
+      run: |
+        echo "Contents of all-reports:"
+        find all-reports -type f -name "*.jsonl" | head -10
+        ls -la all-reports/
     
     - name: Merge HTML reports
       run: npx playwright merge-reports --reporter html ./all-reports
