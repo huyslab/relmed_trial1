@@ -351,7 +351,13 @@ function initPavlovianLottery() {
   };
 
   // Build the main task trial sequence
-  const last_lottery = parseInt(window.last_state.split("_")[2]);
+  let last_lottery = 0; // Default value
+  if (typeof window.last_state === 'string' && (window.last_state.match(/_/g) || []).length >= 2) {
+    const parts = window.last_state.split("_");
+    last_lottery = parseInt(parts[2]) || 0; // Fallback to 0 if parsing fails
+  } else {
+    console.warn("Invalid format for window.last_state. Falling back to default value.");
+  }
   const trialSequence = {
     timeline: [
       lotteryAnimation,
