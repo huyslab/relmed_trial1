@@ -60,6 +60,7 @@ const wm_order = [
 
 let pilt_to_test_order = [
     "prepilt_conditioning_start",
+    "pavlovian_lottery_last",
     "pilt_instructions_start",
     "pilt_task_start"];
 

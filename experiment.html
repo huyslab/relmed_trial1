@@ -317,7 +317,7 @@
             }
 
             // Add Pre-PILT conditioning
-            if (resumptionRule(pilt_to_test_order, window.last_state, "pilt_instructions_start")) {
+            if (resumptionRule(pilt_to_test_order, window.last_state, "pavlovian_lottery_last")) {
                 console.log("Adding pre-PILT conditioning");
                 procedure = procedure.concat(initPavlovianLottery());
             }
