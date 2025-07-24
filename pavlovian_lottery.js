@@ -326,7 +326,6 @@ function initPavlovianLottery() {
     data: { trialphase: 'prepilt_conditioning'},
     on_start: function (trial) {
       jsPsych.pluginAPI.setTimeout(() => {
-        console.log(PREPILT_CONFIG.CONSTANTS.CONTINUE_MESSAGE_DELAY);
         const continueMsg = document.querySelector('#continue-msg');
         continueMsg.style.visibility = 'visible';
       }, PREPILT_CONFIG.CONSTANTS.CONTINUE_MESSAGE_DELAY); // Delay before showing the prompt
