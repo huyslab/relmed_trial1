@@ -379,7 +379,7 @@ function initPavlovianLottery() {
 
   // Build the full experiment timeline
   const timeline = [
-    // prepilt_preload,
+    // prepilt_preload, // Disabled because preloading is currently handled elsewhere. Re-enable this line if additional preloading is required for new stimuli or assets.
     instructions,
     trialSequence,
     endMessage
