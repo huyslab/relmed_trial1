@@ -1,3 +1,11 @@
+## [2.0.1](https://github.com/huyslab/relmed_trial1/compare/v2.0.0...v2.0.1) (2025-07-24)
+
+
+### Bug Fixes
+
+* add Pavlovian lottery back in main timeline of trial 1 ([#325](https://github.com/huyslab/relmed_trial1/issues/325)) ([801c245](https://github.com/huyslab/relmed_trial1/commit/801c2458ff8bb6ed885f42d6bd5c8dc63f1cd2e8))
+* add trialphase variable to delay discounting task ([e37db7f](https://github.com/huyslab/relmed_trial1/commit/e37db7fd999336d41dc3e242775ba50926f70ac8))
+
 # [2.0.0](https://github.com/huyslab/relmed_trial1/compare/v1.1.1...v2.0.0) (2025-07-08)
 
 
