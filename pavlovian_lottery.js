@@ -11,7 +11,7 @@
 // Define the Pavlovian stimuli and their associated rewards
 const SPEED_UP_FACTOR = window.simulating ? 10 : 1;
 
-const PREPILT_CONFIG = {
+var PREPILT_CONFIG = {
   sequence: [{ "pav_value": -1.0 }, { "pav_value": 0.5 }, { "pav_value": -1.0 }, { "pav_value": -1.0 }, { "pav_value": 0.01 }, { "pav_value": 1.0 }, { "pav_value": 0.01 }, { "pav_value": -0.01 }, { "pav_value": 0.5 }, { "pav_value": -0.01 }, { "pav_value": 0.01 }, { "pav_value": -0.01 }, { "pav_value": 1.0 }, { "pav_value": 1.0 }, { "pav_value": -0.5 }, { "pav_value": 0.01 }, { "pav_value": -0.5 }, { "pav_value": 0.5 }, { "pav_value": -1.0 }, { "pav_value": -0.5 }, { "pav_value": 1.0 }, { "pav_value": 0.5 }, { "pav_value": -1.0 }, { "pav_value": -0.5 }, { "pav_value": -0.01 }, { "pav_value": 0.5 }, { "pav_value": 1.0 }, { "pav_value": 0.01 }, { "pav_value": -0.01 }, { "pav_value": -0.5 }],
 
   stimulus: {
@@ -50,6 +50,12 @@ const PREPILT_CONFIG = {
     CONTINUE_MESSAGE_DELAY: 1500 / SPEED_UP_FACTOR,
   }
 };
+
+// Add index to PREPILT_CONFIG.sequence for resumption
+PREPILT_CONFIG.sequence = PREPILT_CONFIG.sequence.map((item, index) => ({
+  prepilt_trial: index + 1,
+  ...item
+}));
 
 // Function to initialize the Pavlovian Lottery experiment
 function initPavlovianLottery() {
@@ -120,7 +126,7 @@ function initPavlovianLottery() {
     `,
     choices: [' '],
     data: { trialphase: 'prepilt_instruction' },
-    on_start: () => {updateState("prepilt_instructions_start")}
+    on_start: () => {updateState("prepilt_conditioning_start")}
   }
   ];
 
@@ -313,6 +319,7 @@ function initPavlovianLottery() {
     choices: "NO_KEYS",
     trial_duration: PREPILT_CONFIG.CONSTANTS.MAX_RESULT_DISPLAY_TIME,
     save_timeline_variables: true,
+    data: { trialphase: 'prepilt_conditioning'},
     on_start: function (trial) {
       jsPsych.pluginAPI.setTimeout(() => {
         const continueMsg = document.querySelector('#continue-msg');
@@ -331,17 +338,18 @@ function initPavlovianLottery() {
         allow_held_key: false,
         minimum_valid_rt: PREPILT_CONFIG.CONSTANTS.CONTINUE_MESSAGE_DELAY,
       });
+      updateState(`pavlovian_lottery_${jsPsych.evaluateTimelineVariable('prepilt_trial')}`, false);
     }
   };
 
   // Build the main task trial sequence
+  const last_lottery = parseInt(window.last_state.split("_")[2]);
   const trialSequence = {
     timeline: [
       lotteryAnimation,
       showResult,
     ],
-    timeline_variables: PREPILT_CONFIG.sequence,
-    on_timeline_start:() => {updateState("prepilt_trial_start")}
+    timeline_variables: PREPILT_CONFIG.sequence.slice(last_lottery)
   };
 
   // Create an ending message
@@ -357,7 +365,7 @@ function initPavlovianLottery() {
 
   // Build the full experiment timeline
   const timeline = [
-    prepilt_preload,
+    // prepilt_preload,
     instructions,
     trialSequence,
     endMessage
