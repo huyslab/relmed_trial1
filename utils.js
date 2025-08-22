@@ -718,60 +718,15 @@ function inter_block_stimulus(){
             });
         }
 
-    } else if (valence != 0) {
-        txt += `<p><img src='imgs/safe.png' style='width:100px; height:100px;'></p>
-        <p>These coins ${isValidNumber(block) ? "were" : "would have been"} 
-        ${valence == 1 ? "added to your safe" : "broken in your safe"} on this round:</p>`
-    }
+    } 
 
-    if (valence == 1){
+    const earnings = Object.entries(chosen_outcomes).reduce((sum, [value, count]) => {
+        // Convert string keys to numbers explicitly for reliable calculation
+        return sum + (Number(value) * count);
+    }, 0);
 
-        txt += `<div style='display: grid'><table><tr>
-            <td><img src='imgs/1pound.png' style='width:${small_coin_size}px; height:${small_coin_size}px;'></td>`
+    txt += `<p>Altogether on this round, you've ${earnings >= 0 ? "collected" : "lost"} coins worth £${Math.abs(earnings).toFixed(2)}.</p>`;
         
-        if (fifty){
-            txt +=  `<td><img src='imgs/50pence.png' style='width:${small_coin_size}px; height:${small_coin_size}px;'</td>`
-        }
-           
-        txt += `<td><img src='imgs/1penny.png' style='width:${small_coin_size}px; height:${small_coin_size}px;'></td>
-            </tr>
-            <tr>
-            <td>${isValidNumber(chosen_outcomes[1]) ? chosen_outcomes[1] : 0}</td>`;
-
-        if (fifty) {
-            txt += `<td>${isValidNumber(chosen_outcomes[0.5]) ? chosen_outcomes[0.5] : 0}</td>`
-        }    
-            
-        txt += `<td>${isValidNumber(chosen_outcomes[0.01]) ? chosen_outcomes[0.01] : 0}</td>
-            </tr></table></div>`;
-    } else if (valence == -1) {
-        txt += `<div style='display: grid'><table>
-            <tr><td><img src='imgs/1poundbroken.png' style='width:${small_coin_size}px; height:${small_coin_size}px;'></td>`
-            
-        if (fifty){
-            txt += `<td><img src='imgs/50pencebroken.png' style='width:${small_coin_size}px; height:${small_coin_size}px;'</td>`;
-        }
-            
-        txt += `<td><img src='imgs/1pennybroken.png' style='width:${small_coin_size}px; height:${small_coin_size}px;'></td>
-            </tr>
-            <tr>
-            <td>${isValidNumber(chosen_outcomes[-1]) ? chosen_outcomes[-1] : 0}</td>`
-
-        if (fifty){
-            txt += `<td>${isValidNumber(chosen_outcomes[-0.5]) ? chosen_outcomes[-0.5] : 0}</td>`;
-        }
-            
-        txt += `<td>${isValidNumber(chosen_outcomes[-0.01]) ? chosen_outcomes[-0.01] : 0}</td>
-            </tr></table></div>`;
-    } else {
-        const earnings = Object.entries(chosen_outcomes).reduce((sum, [value, count]) => {
-            // Convert string keys to numbers explicitly for reliable calculation
-            return sum + (Number(value) * count);
-        }, 0);
-
-        txt += `<p>Altogether on this round, you've ${earnings >= 0 ? "collected" : "lost"} coins worth £${Math.abs(earnings).toFixed(2)}.</p>`;
-        
-    }
 
     if (isValidNumber(block)){
         txt += n_stimuli === 2 ? `<p>Press the right arrow to continue.</p>` :
