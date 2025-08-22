@@ -1,3 +1,10 @@
+## [2.0.2](https://github.com/huyslab/relmed_trial1/compare/v2.0.1...v2.0.2) (2025-08-22)
+
+
+### Bug Fixes
+
+* remove safe-based feedback from WM (and trial entirely) ([#328](https://github.com/huyslab/relmed_trial1/issues/328)) ([f66a772](https://github.com/huyslab/relmed_trial1/commit/f66a77275f8df778b3a0af495a39b511dca2c39d))
+
 ## [2.0.1](https://github.com/huyslab/relmed_trial1/compare/v2.0.0...v2.0.1) (2025-07-24)
 
 
