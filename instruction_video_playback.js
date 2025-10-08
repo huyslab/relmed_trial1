@@ -21,7 +21,6 @@ const video_welcome_txt = {
   type: jsPsychInstructions,
   css_classes: ['instructions'],
   pages: [`
-    <p><b>Welcome!</b></p>
     <p>Before you dive into the first task, please take a moment to watch our brief introductory video.</p>
     <p>It explains how games work in general and will help you feel prepared for what's ahead.</p>
     <p>Once you've watched it, you can move on to the first game!</p>
