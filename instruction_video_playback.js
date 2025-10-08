@@ -37,5 +37,12 @@ const instruction_video = {
   height: 540,
   autoplay: false,
   trial_ends_after_video: false,
-  response_allowed_while_playing: false
+  response_allowed_while_playing: false,
+  on_start: function(trial) {
+    // In simulation mode, allow immediate response and auto-end after video
+    if (jsPsych.simulationMode !== undefined) {
+      trial.response_allowed_while_playing = true;
+      trial.trial_ends_after_video = true;
+    }
+  }
 };
