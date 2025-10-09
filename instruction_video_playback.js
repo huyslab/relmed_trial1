@@ -13,7 +13,7 @@ const preload_video = {
     console.log("load_successful")
 
     // Report to relmed.ac.uk
-    // postToParent({message: "load_successful"})
+    postToParent({message: "load_successful"})
   }
 };
 
