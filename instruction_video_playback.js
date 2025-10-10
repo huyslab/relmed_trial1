@@ -1,3 +1,5 @@
+let preloadDotInterval = null;
+
 const preload_video = {
   type: jsPsychPreload,
   video: ["RELMED_540p.mp4"],
@@ -18,16 +20,16 @@ const preload_video = {
   on_load: function () {
     let dotCount = 0;
     const dotsElement = document.getElementById('dots');
-    const interval = setInterval(() => {
+    preloadDotInterval = setInterval(() => {
       dotCount = (dotCount + 1) % 5;
       dotsElement.textContent = '.'.repeat(dotCount);
     }, 500);
-
-    // Store interval to clear it later
-    this.interval = interval;
   },
   on_finish: function () {
-    if (this.interval) clearInterval(this.interval);
+    if (preloadDotInterval) {
+      clearInterval(preloadDotInterval);
+      preloadDotInterval = null;
+    }
   }
 };
 
@@ -54,7 +56,7 @@ const instruction_video = {
   response_allowed_while_playing: window.last_state === "video_start",
   on_start: function (trial) {
     updateState('video_start');
-    
+
     // In simulation mode, allow immediate response and auto-end after video
     if (jsPsych.simulationMode !== undefined) {
       trial.response_allowed_while_playing = true;
