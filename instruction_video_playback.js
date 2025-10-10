@@ -51,12 +51,18 @@ const instruction_video = {
   height: 540,
   autoplay: false,
   trial_ends_after_video: false,
-  response_allowed_while_playing: false,
-  on_start: function(trial) {
+  response_allowed_while_playing: window.last_state === "video_start" ? true : false,
+  on_start: function (trial) {
+    updateState('video_start');
+    
     // In simulation mode, allow immediate response and auto-end after video
     if (jsPsych.simulationMode !== undefined) {
       trial.response_allowed_while_playing = true;
       trial.trial_ends_after_video = true;
     }
+  },
+  data: { trialphase: "play_video" },
+  on_finish: () => {
+    updateState('video_end');
   }
 };

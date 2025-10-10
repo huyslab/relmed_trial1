@@ -632,7 +632,8 @@
             }
 
             // Add instruction video
-            if (window.last_state === "none" && window.context === "relmed") {
+            if (resumptionRule(screening_order, window.last_state, "video_end") && window.context === "relmed") {
+                console.log("Adding instruction video");
                 procedure.push(video_welcome_txt);
                 procedure.push(preload_video);
                 procedure.push(instruction_video);
