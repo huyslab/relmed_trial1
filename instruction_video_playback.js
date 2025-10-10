@@ -51,7 +51,7 @@ const instruction_video = {
   height: 540,
   autoplay: false,
   trial_ends_after_video: false,
-  response_allowed_while_playing: window.last_state === "video_start" ? true : false,
+  response_allowed_while_playing: window.last_state === "video_start",
   on_start: function (trial) {
     updateState('video_start');
     
