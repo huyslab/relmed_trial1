@@ -2,8 +2,8 @@ const preload_video = {
   type: jsPsychPreload,
   video: ["RELMED_540p.mp4"],
   post_trial_gap: 400,
-  show_progress_bar: true,
-  message: "Loading the video, thanks for your patience...",
+  show_progress_bar: false,
+  message: `<p>Loading the video, this may take up to a minute</p><p>Thanks for your patience</p><p>.<span id='dots'></span></p>`,
   data: {
     trialphase: "preload_video"
   },
@@ -13,7 +13,21 @@ const preload_video = {
     console.log("load_successful")
 
     // Report to relmed.ac.uk
-    postToParent({message: "load_successful"})
+    postToParent({ message: "load_successful" })
+  },
+  on_load: function () {
+    let dotCount = 0;
+    const dotsElement = document.getElementById('dots');
+    const interval = setInterval(() => {
+      dotCount = (dotCount + 1) % 5;
+      dotsElement.textContent = '.'.repeat(dotCount);
+    }, 500);
+
+    // Store interval to clear it later
+    this.interval = interval;
+  },
+  on_finish: function () {
+    if (this.interval) clearInterval(this.interval);
   }
 };
 
@@ -21,8 +35,8 @@ const video_welcome_txt = {
   type: jsPsychInstructions,
   css_classes: ['instructions'],
   pages: [`
-    <p>Before you dive in, please take a moment to watch our brief introductory video.</p>
-    <p>It explains how games work in general and will help you feel prepared for what's ahead.</p>
+    <p>Before you dive in, please watch our introductory video.</p>
+    <p>It explains how the games work and will help you feel prepared for what's ahead.</p>
     <p>Once you've watched it, you can move on to start the games!</p>
     `],
   show_clickable_nav: true,
