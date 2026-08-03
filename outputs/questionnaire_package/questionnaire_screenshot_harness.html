@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RELMED questionnaire screenshot harness</title>
+  <link href="../../jspsych/jspsych.css" rel="stylesheet" type="text/css">
+  <style>
+    .instructions p { width: 700px; text-align: left; }
+    .instructions td { padding-left: 20px; padding-right: 20px; }
+    /* Let full-page captures include content that normally scrolls inside the viewport. */
+    .survey-template-wrap { height: auto !important; min-height: 100vh; }
+  </style>
+  <script src="../../jspsych/jspsych.js"></script>
+  <script src="../../jspsych/plugin-survey-multi-choice.js"></script>
+  <script src="../../plugin-survey-template.js"></script>
+  <script>
+    window.session = "screenshot";
+    window.task = "screenshot";
+    window.last_state = "none";
+    window.updateState = () => {};
+  </script>
+  <script src="../../questionnaires.js"></script>
+</head>
+<body>
+  <div id="display_element"></div>
+  <script>
+    const questionnaireName = new URLSearchParams(location.search).get("q") || "PHQ9";
+    const questionnaireFunctions = {
+      PHQ9: questionnaire_phq,
+      GAD7: questionnaire_gad,
+      WSAS: questionnaire_WSAS,
+      ICECAP: questionnaire_ICECAP,
+      PVSS: questionnaire_pvss,
+      BADS: questionnaire_BADS,
+      Hopelessness: questionnaire_hopelessness,
+      RRS_brooding: questionnaire_RRS_brooding,
+      PERS_negAct: questionnaire_PERS_negAct,
+      BFI: questionnaire_BFI
+    };
+
+    if (!questionnaireFunctions[questionnaireName]) {
+      throw new Error(`Unknown questionnaire: ${questionnaireName}`);
+    }
+
+    const jsPsych = initJsPsych({ display_element: "display_element" });
+    jsPsych.run([questionnaireFunctions[questionnaireName](1, 1)]);
+  </script>
+</body>
+</html>

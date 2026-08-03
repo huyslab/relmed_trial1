@@ -1,0 +1,141 @@
+variable,description,variable type,nmissing,min,max,task
+interaction_data,jsPsych focus/blur interaction log for the sitting (browser focus events).,"Union{Missing, String}",47038,[],"[{""event"":""blur"",""time"":8508,""trial"":163},{""event"":""focus"",""time"":57625,""trial"":2857}]",admin
+jspsych_data,Full embedded copy of the sitting's jsPsych data (backup payload row).,"Union{Missing, String}",47038,"[{""trial_type"":""call-function"",""trial_index"":0,""plugin_version"":""2.0.0"",""time_elapsed"":1,""participant_id"":""REL-TST-007"",…","[{""trial_type"":""call-function"",""trial_index"":0,""plugin_version"":""2.0.0"",""time_elapsed"":8,""participant_id"":""REL-TST-879"",…",admin
+module_start_time,Timestamp when the current module started.,"Union{Missing, String}",67,2025-04-07_13:02:29,2025-06-04_15:14:21,admin
+n_instruction_fail,Cumulative number of failed instruction-quiz attempts during the sitting.,"Union{Missing, Int64}",10404,0,0,admin
+n_warnings,Cumulative number of missed-response warnings during the sitting.,"Union{Missing, Int64}",67,0,29,admin
+participant_id,RELMED participant id.,"Union{Missing, String}",67,DELOSIS-001,REL-TST-997,admin
+pause_resume_events,Log of pause/resume events during the sitting.,"Union{Missing, String}",46946,"[{""time"":0,""event"":""resume""}]","[{""time"":9563,""event"":""pause""},{""time"":14498,""event"":""resume""}]",admin
+plugin_version,Version of the jsPsych plugin used on the trial.,"Union{Missing, String}",67,0.1,2.0.1,admin
+pre_kick_out_warned,Whether the participant received a gentle warning about responding too slowly.,"Union{Missing, Bool}",67,FALSE,TRUE,admin
+record_id,"REDCap record id for the sitting (participant_id + '_' + module_start_time). Derived from the file, not stored per trial.","Union{Missing, String}",67,DELOSIS-001_2025-04-07_16:51:01,REL-TST-997_2025-05-15_10:57:47,admin
+restart,Flag indicating the task was restarted/resumed.,"Union{Missing, Bool}",47104,TRUE,TRUE,admin
+session,"Session name (screening, wk0, wk2, wk4, wk6, wk8, wk24, wk28, wk52).","Union{Missing, String}",67,screening,wk8,admin
+task,"Module name run in this sitting (screening, pilt-to-test, reversal, control, wm, quests).","Union{Missing, String}",67,control,wm,admin
+time_elapsed,Milliseconds elapsed since the start of the sitting.,"Union{Missing, Int64}",67,0,85525612,admin
+trial_index,Index of the current trial within the sitting (jsPsych).,"Union{Missing, Int64}",67,0,3163,admin
+trial_type,jsPsych plugin used on this trial.,"Union{Missing, String}",67,PILT,survey-text,admin
+version,Version of the task code being run.,"Union{Missing, String}",67,0.3,1.0.3,admin
+response,"Participant's response (key, rating, or questionnaire object depending on trial).","Union{Missing, String}",7878,2,"{""wm_difficulty"":4,""wm_enjoy"":4,""wm_clear"":2}",general
+rt,Response time for the trial (ms).,"Union{Missing, Float64}",4742,0,3558199,general
+timeline_variables,Saved jsPsych timeline variables (nested object; sub-fields listed as tv:* rows).,"Union{Missing, String}",40211,"{""left"":""blue"",""right"":""green"",""near"":""banana"",""current"":1}","{""target"":""orange"",""near"":""grape"",""left"":""red"",""right"":""green"",""current"":2,""island_viable"":true,""left_viable"":false,""rig…",general
+trialphase,Short label identifying the trial phase.,"Union{Missing, String}",3110,BADS,wm_test,general
+failed_audio,List of audio files that failed to download.,"Union{Missing, String}",45625,[],[],preload
+failed_images,List of image files that failed to download.,"Union{Missing, String}",45625,[],[],preload
+failed_video,List of video files that failed to download.,"Union{Missing, String}",45625,[],[],preload
+success,Whether task assets loaded successfully.,"Union{Missing, Bool}",45625,FALSE,TRUE,preload
+timeout,Whether preloading assets timed out.,"Union{Missing, Bool}",45485,FALSE,FALSE,preload
+view_history,"Instruction pages viewed, with viewing times (jsPsych instructions).","Union{Missing, String}",45058,"[{""page_index"":0,""viewing_time"":0}]","[{""page_index"":0,""viewing_time"":9}]",instructions
+pilt_n_warnings,Missed-response warnings during the PILT task.,"Union{Missing, Int64}",38169,0,3,PILT
+pilt_test_n_warnings,Missed-response warnings during the PILT test phase.,"Union{Missing, Int64}",33935,0,3,PILT
+chosen_stimulus,The chosen image.,"Union{Missing, String}",31213,imgs/PILT_stims/abacus_1.jpg,imgs/Pav_stims/wk4/PIT6.png,PILT/WM
+EV_left,Expected value of the left option.,"Union{Missing, Float64}",45065,-1,1,PILT/WM
+EV_right,Expected value of the right option.,"Union{Missing, Float64}",45065,-1,1,PILT/WM
+feedback_middle,Outcome associated with the middle image (3-stimulus trials).,"Union{Missing, Float64}",44028,0.01,1,PILT/WM
+key,Key pressed (arrow key).,"Union{Missing, String}",31213,arrowleft,arrowup,PILT/WM
+keyPressOnset,Timestamp of the key press.,"Union{Missing, Float64}",31078,4103.100000023842,3159346,PILT/WM
+magnitude_left,Reward magnitude of the left stimulus in the PILT/WM/LTM test phase.,"Union{Missing, Float64}",44021,-1,1,PILT/WM
+magnitude_right,Reward magnitude of the right stimulus in the PILT/WM/LTM test phase.,"Union{Missing, Float64}",44021,-1,1,PILT/WM
+n_groups,Number of concurrent stimulus groups in the block.,"Union{Missing, Int64}",36202,1,14,PILT/WM
+n_stimuli,Number of stimuli presented on the trial.,"Union{Missing, Int64}",31078,1,3,PILT/WM
+optimal_side,Which side held the optimal stimulus (3-stimulus trials).,"Union{Missing, String}",44028,left,right,PILT/WM
+original_block_left,Source block of the left stimulus (re-presented pairs).,"Union{Missing, Int64}",41981,1,20,PILT/WM
+original_block_right,Source block of the right stimulus (re-presented pairs).,"Union{Missing, Int64}",41981,1,20,PILT/WM
+pavlovian_stimulus,Pavlovian stimulus shown with the outcome.,"Union{Missing, String}",31213,,Pav_stims/wk4/PIT6.png,PILT/WM
+response_deadline_warning,Whether a late-response warning was shown on the trial.,"Union{Missing, Bool}",30749,FALSE,TRUE,PILT/WM
+rest,"Coins still winnable/losable in the block, as {denomination: count} (negative denominations = punishment).","Union{Missing, String}",41676,"{""-0.01"":1,""0.01"":1}",{},PILT/WM
+rest_1penny,Number of 1-penny coins still available in the block.,"Union{Missing, Int64}",41631,0,30,PILT/WM
+rest_1pound,Number of 1-pound coins still available in the block.,"Union{Missing, Int64}",41631,0,89,PILT/WM
+rest_50pence,Number of 50-pence coins still available in the block.,"Union{Missing, Int64}",41631,0,21,PILT/WM
+same_block,Whether both stimuli originate from the same block.,"Union{Missing, Bool}",41981,FALSE,TRUE,PILT/WM
+same_valence,Whether both stimuli share the same valence.,"Union{Missing, Bool}",41981,FALSE,TRUE,PILT/WM
+stimulus_group,Stimulus-group index within the block.,"Union{Missing, Int64}",36202,1,14,PILT/WM
+stimulus_group_id,Stimulus-group index across blocks.,"Union{Missing, Int64}",36202,1,20,PILT/WM
+stimulus_left,Image shown on the left.,"Union{Missing, String}",31078,imgs/PILT_stims/abacus_1.jpg,imgs/Pav_stims/wk4/PIT6.png,PILT/WM
+stimulus_middle,Image shown in the middle (3-stimulus / WM trials).,"Union{Missing, String}",44028,imgs/PILT_stims/abacus_1.jpg,imgs/PILT_stims/yolk_1.jpg,PILT/WM
+stimulus_right,Image shown on the right.,"Union{Missing, String}",31078,imgs/PILT_stims/abacus_1.jpg,imgs/Pav_stims/wk4/PIT6.png,PILT/WM
+valence,Valence of the block (reward vs punishment).,"Union{Missing, Int64}",36202,-1,1,PILT/WM
+block,Block number/label.,"Union{Missing, Any}",20658,,,PILT/WM/reversal
+chosen_feedback,Outcome associated with the chosen image.,"Union{Missing, Float64}",20658,-1,1,PILT/WM/reversal
+feedback_left,Outcome associated with the left image.,"Union{Missing, Float64}",20658,-1,1,PILT/WM/reversal
+feedback_right,Outcome associated with the right image.,"Union{Missing, Float64}",20658,-1,1,PILT/WM/reversal
+optimal_right,Whether the right image is optimal (1/0).,"Union{Missing, Int64}",23735,0,1,PILT/WM/reversal
+response_optimal,Whether the optimal option was chosen.,"Union{Missing, Bool}",20658,FALSE,TRUE,PILT/WM/reversal
+trial,Trial number within the block/task.,"Union{Missing, Int64}",20658,0,240,PILT/WM/reversal
+wm_n_warnings,Missed-response warnings during the WM task.,"Union{Missing, Int64}",39940,0,3,WM
+wm_test_n_warnings,Missed-response warnings during the WM test phase.,"Union{Missing, Int64}",39999,0,3,WM
+ltm_n_warnings,Missed-response warnings during the LTM task.,"Union{Missing, Int64}",43533,0,2,LTM
+ltm_test_n_warnings,Missed-response warnings during the LTM test phase.,"Union{Missing, Int64}",43533,0,3,LTM
+reversal_n_warnings,Missed-response warnings during the reversal task.,"Union{Missing, Int64}",15540,0,0,reversal
+chosen_magnitude,Reward magnitude of the piggy-bank chosen in the post-vigour test.,"Union{Missing, Int64}",46853,1,5,vigour
+chosen_ratio,Fixed-ratio of the piggy-bank chosen in the post-vigour test.,"Union{Missing, Int64}",46853,1,16,vigour
+left_magnitude,Reward magnitude of the left piggy-bank in the post-vigour test.,"Union{Missing, Int64}",46853,1,5,vigour
+left_ratio,Fixed-ratio of the left piggy-bank in the post-vigour test.,"Union{Missing, Int64}",46853,1,16,vigour
+right_magnitude,Reward magnitude of the right piggy-bank in the post-vigour test.,"Union{Missing, Int64}",46853,1,5,vigour
+right_ratio,Fixed-ratio of the right piggy-bank in the post-vigour test.,"Union{Missing, Int64}",46853,1,16,vigour
+rng_seed,Random-number-generator seed used to build the task sequence.,"Union{Missing, String}",47073,0.029118191575069896,0.9952102237804422,vigour
+trial_number,Vigour trial index within the task.,"Union{Missing, Int64}",45957,1,54,vigour
+vigour_bonus,Bonus (coins) selected/earned for the vigour task.,"Union{Missing, Float64}",47082,0.067947,1.3470119999999999,vigour
+response_time,List of inter-press intervals (ms) during the trial.,"Union{Missing, String}",43917,"[1,145,162,153,150,157,147,160,150,142,144,148,144,149,140,127,134,123,124,126,132,122,107,122,123,131,132,118,128,120,1…",[],vigour/PIT
+total_presses,Cumulative presses across the task so far.,"Union{Missing, Int64}",43917,0,5403,vigour/PIT
+total_reward,Cumulative reward earned across the task so far.,"Union{Missing, Int64}",43917,0,3859,vigour/PIT
+trial_duration,Duration of the active trial window (ms).,"Union{Missing, Int64}",44169,1,7490,vigour/PIT
+trial_presses,Number of key presses made during the trial.,"Union{Missing, Int64}",40907,0,87,vigour/PIT
+trial_reward,Reward earned on the trial (coins).,"Union{Missing, Int64}",43917,0,310,vigour/PIT
+magnitude (timeline_variables),[within timeline_variables] Reward magnitude of the piggy-bank/cue.,"Union{Missing, Int64}",43917,1,5,vigour/PIT
+ratio (timeline_variables),[within timeline_variables] Fixed-ratio (presses per reward).,"Union{Missing, Int64}",43917,1,16,vigour/PIT
+trialDuration (timeline_variables),[within timeline_variables] Programmed trial duration (ms).,"Union{Missing, Int64}",46853,1,7490,vigour/PIT
+pit_coin,Pavlovian coin/cue value shown in the background on the PIT trial.,"Union{Missing, Float64}",45065,-1,1,PIT
+pit_trial_number,PIT trial index within the task.,"Union{Missing, Int64}",45065,1,72,PIT
+button,Island/button clicked in the control home-base prediction trial.,"Union{Missing, String}",46419,banana,orange,control
+control_bonus,Bonus (coins) earned in the control task.,"Union{Missing, Float64}",47091,0.53,30,control
+control_bonus_adjusted,Control bonus after adjustment/capping.,"Union{Missing, Float64}",47094,1.224,1.7999999999999998,control
+control_explore_n_warnings,Missed-response warnings during control explore trials.,"Union{Missing, Int64}",38540,0,3,control
+control_instruction_fail,Cumulative failed control instruction-quiz attempts.,"Union{Missing, Int64}",38565,0,0,control
+control_predict_homebase_n_warnings,Missed-response warnings during control home-base prediction trials.,"Union{Missing, Int64}",39288,0,3,control
+control_reward_n_warnings,Missed-response warnings during control reward trials.,"Union{Missing, Int64}",40944,0,2,control
+control_rule_used,Which transition rule governed the outcome (base vs control).,"Union{Missing, String}",44717,base,control,control
+correct,Whether the prediction/response was correct.,"Union{Missing, Bool}",45649,FALSE,TRUE,control
+destination_island,Island the ship arrived at (control feedback).,"Union{Missing, String}",44717,banana,orange,control
+n_control_trials,Number of control trials completed.,"Union{Missing, Int64}",43395,1,144,control
+probability_control,Probability that the controllable rule applied on the trial.,"Union{Missing, Float64}",44857,2.319522830243569e-16,1,control
+responseTime,List of inter-press intervals (ms) during effort/press control trials.,"Union{Missing, String}",44037,"[0,100,109]",[],control
+reward,Reward delivered on the control reward trial.,"Union{Missing, Float64}",46434,0,2,control
+ship_color,Colour of the ship on the trial.,"Union{Missing, String}",44857,blue,yellow,control
+current (timeline_variables),[within timeline_variables] Ocean-current setting.,"Union{Missing, Int64}",44095,1,3,control
+island_viable (timeline_variables),[within timeline_variables] Whether the target island is viable.,"Union{Missing, Bool}",46385,FALSE,TRUE,control
+left (timeline_variables),[within timeline_variables] Left-choice ship/island.,"Union{Missing, String}",44095,blue,yellow,control
+left_viable (timeline_variables),[within timeline_variables] Whether the left option is viable.,"Union{Missing, Bool}",46385,FALSE,TRUE,control
+near (timeline_variables),[within timeline_variables] Near island.,"Union{Missing, String}",44095,banana,orange,control
+reward_amount (timeline_variables),[within timeline_variables] Reward amount available.,"Union{Missing, String}",46433,50p,£2,control
+reward_number (timeline_variables),[within timeline_variables] Number of reward tokens available.,"Union{Missing, Float64}",46433,0.5,2,control
+right (timeline_variables),[within timeline_variables] Right-choice ship/island.,"Union{Missing, String}",44095,blue,yellow,control
+right_viable (timeline_variables),[within timeline_variables] Whether the right option is viable.,"Union{Missing, Bool}",46385,FALSE,TRUE,control
+ship (timeline_variables),[within timeline_variables] Ship (prediction trials).,"Union{Missing, String}",46409,blue,yellow,control
+target (timeline_variables),[within timeline_variables] Target island (reward trials).,"Union{Missing, String}",46385,banana,orange,control
+dd_n_warnings,Missed-response warnings during the delay-discounting task.,"Union{Missing, Int64}",42693,0,1,discounting
+delay,Delay until the larger-later reward (days).,"Union{Missing, Int64}",46430,1,186,discounting
+sum_later,Amount available after the delay (larger-later option).,"Union{Missing, Int64}",46430,1,85,discounting
+sum_today,Amount available immediately (smaller-sooner option).,"Union{Missing, Int64}",46430,1,80,discounting
+honeypot,Whether a hidden bot-only item was answered (0/1).,"Union{Missing, Int64}",46611,0,0,questionnaire
+item_order,Order of item presentation.,"Union{Missing, String}",46611,"[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21]","[0,1]",questionnaire
+key_event_times,Times of keyboard strokes during the questionnaire.,"Union{Missing, String}",46611,"[10.300000071525574,19.700000047683716,28.5,37.300000071525574,45.5,54.60000002384186,63.60000002384186,72.2000000476837…",[],questionnaire
+mouse_event_times,Times of mouse clicks during the questionnaire.,"Union{Missing, String}",46611,"[0,1008,1290,1502,1732,2012,2276,2583,3023,3460,3885,4176,4686,4883,5206,5595,5836,6255,6648,6945,7412,7750,8117,8746,90…",[],questionnaire
+question_order,Order of question presentation.,"Union{Missing, String}",46584,"[0,1,2,3,4]","[0,1]",questionnaire
+radio_event_ids,Order of questionnaire items clicked.,"Union{Missing, String}",46611,"[""Q01"",""Q01"",""Q01"",""Q02"",""Q03"",""Q04"",""Q04"",""Q05"",""Q06"",""Q07"",""Q08"",""Q09"",""Q10""]","[""Q10"",""Q01"",""Q02"",""Q03"",""Q04"",""Q05"",""Q06"",""Q06"",""Q06"",""Q07"",""Q07"",""Q08"",""Q09""]",questionnaire
+radio_event_times,Times of questionnaire item clicks.,"Union{Missing, String}",46611,"[10.300000071525574,19.700000047683716,28.5,37.300000071525574,45.5,54.60000002384186,63.60000002384186,72.2000000476837…","[997.5,1471.2000000476837,1865,2676.0999999046326,3094.5]",questionnaire
+responses,Questionnaire responses (item -> value).,"Union{Missing, String}",46611,"{""Q01"":""0"",""Q02"":""0"",""Q03"":""0"",""Q04"":""0"",""Q05"":""0"",""Q06"":""0"",""Q07"":""0"",""Q08"":""0"",""Q09"":""0"",""Q10"":""0"",""Q11"":""0"",""Q12"":""0""…","{""Q01"":""8"",""Q02"":""8"",""Q03"":""8"",""Q04"":""8"",""Q05"":""8"",""retired_check"":false}",questionnaire
+straightlining,Max fraction of responses at the same scale position.,"Union{Missing, Float64}",46611,0.18181818181818182,1,questionnaire
+zigzagging,Fraction of responses showing zig-zag adjacency.,"Union{Missing, Float64}",46611,0,1,questionnaire
+bonus,Bonus amount (in currency units) revealed/paid on a bonus trial.,"Union{Missing, String}",47049,0.39,2.30,bonus
+choices,Cards/coins chosen in the coin-lottery bonus game.,"Union{Missing, String}",47094,"[""1"",""20"",""18"",""28""]","[""9"",""26"",""1"",""25""]",bonus
+end_rt,Time from start to the final lottery action.,"Union{Missing, Int64}",47094,1,200654,bonus
+outcomes,Outcome (coin value) of each lottery flip.,"Union{Missing, String}",47094,"[-0.5,1,0.5,1]","[1,1,-1,0.01]",bonus
+rts,Response times for each lottery flip.,"Union{Missing, String}",47094,"[1316,2337,3320,4311]","[5651,6547,7787,9648]",bonus
+start_time,Timestamp when the coin-lottery game started.,"Union{Missing, Float64}",47094,67753.70000004768,3171746,bonus
+avgSpeed,Average press speed (presses per second) in the keyboard test.,"Union{Missing, Float64}",47029,2.857142857142857,9,press-test
+trialPresses,Number of presses during the max-press-rate/speed test.,"Union{Missing, Int64}",47047,1,63,press-test
+exp_start_time,Module start time from jsPsych. Not in this export; superseded by/duplicates module_start_time.,"Union{Missing, String}",47105,,,admin
+PIT_bonus,Bonus (coins) for the PIT task. Not in this export; PIT bonus appears under 'bonus'/'vigour_bonus' here.,"Union{Missing, Float64}",47105,,,PIT
+chosen_later,Whether the larger-later option was chosen (delay discounting). Not stored as a column here; derivable from 'response'.,"Union{Missing, Bool}",47105,,,discounting
+lvl2_attention,Open-text hidden attention-check response. Not present in this export.,"Union{Missing, String}",47105,,,open-text
