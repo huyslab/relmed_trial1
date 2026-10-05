@@ -43,6 +43,7 @@ const quests_order = [
     "RRS_brooding_start",
     "PERS_negAct_start",
     "BFI_start",
+    "medication_status",
     "placebo_drug_guess",
     "placebo_drug_confidence"
 ]
