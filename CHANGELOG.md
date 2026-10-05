@@ -1,3 +1,11 @@
+# [2.3.0](https://github.com/huyslab/relmed_trial1/compare/v2.2.0...v2.3.0) (2026-10-05)
+
+
+### Features
+
+* add medication status item ([95957a4](https://github.com/huyslab/relmed_trial1/commit/95957a46c839bceecbe96c8d03382fcadb840831))
+* add medication status item after questionnaires ([712f9fc](https://github.com/huyslab/relmed_trial1/commit/712f9fcc95896208783580ed4dc439befdbcba07))
+
 # [2.2.0](https://github.com/huyslab/relmed_trial1/compare/v2.1.2...v2.2.0) (2026-01-12)
 
 
