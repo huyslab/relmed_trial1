@@ -40,21 +40,21 @@ This reposistory hosts the experiment website for the RELMED trial 1, which incl
 
 | Session | Task | Chromium | Firefox | WebKit |
 |---------|------|----------|---------|--------|
-| screening | screening | ✅ Success | ✅ Success | ✅ Success |
-| wk0 | pilt-to-test | ✅ Success | ✅ Success | ✅ Success |
-| wk0 | reversal | ✅ Success | ✅ Success | ✅ Success |
-| wk0 | control | ✅ Success | ✅ Success | ✅ Success |
-| wk0 | wm | ✅ Success | ✅ Success | ✅ Success |
-| wk2 | pilt-to-test | ✅ Success | ✅ Success | ✅ Success |
-| wk2 | reversal | ✅ Success | ✅ Success | ✅ Success |
-| wk2 | control | ✅ Success | ✅ Success | ✅ Success |
-| wk2 | wm | ✅ Success | ✅ Success | ✅ Success |
-| wk4 | pilt-to-test | ✅ Success | ✅ Success | ✅ Success |
-| wk4 | reversal | ✅ Success | ✅ Success | ✅ Success |
-| wk4 | control | ✅ Success | ✅ Success | ✅ Success |
-| wk4 | wm | ✅ Success | ✅ Success | ✅ Success |
+| screening | screening | ❌ Failed | ✅ Success | ✅ Success |
+| wk0 | pilt-to-test | ❌ Failed | ✅ Success | ✅ Success |
+| wk0 | reversal | ❌ Failed | ✅ Success | ✅ Success |
+| wk0 | control | ❌ Failed | ✅ Success | ✅ Success |
+| wk0 | wm | ❌ Failed | ✅ Success | ✅ Success |
+| wk2 | pilt-to-test | ❌ Failed | ✅ Success | ✅ Success |
+| wk2 | reversal | ❌ Failed | ✅ Success | ✅ Success |
+| wk2 | control | ❌ Failed | ✅ Success | ✅ Success |
+| wk2 | wm | ❌ Failed | ✅ Success | ✅ Success |
+| wk4 | pilt-to-test | ❌ Failed | ✅ Success | ✅ Success |
+| wk4 | reversal | ❌ Failed | ✅ Success | ✅ Success |
+| wk4 | control | ❌ Failed | ✅ Success | ✅ Success |
+| wk4 | wm | ❌ Failed | ✅ Success | ✅ Success |
 | wk24 | pilt-to-test | ✅ Success | ✅ Success | ✅ Success |
-| wk24 | reversal | ✅ Success | ✅ Success | ✅ Success |
+| wk24 | reversal | ❌ Failed | ✅ Success | ✅ Success |
 | wk24 | control | ✅ Success | ✅ Success | ✅ Success |
 | wk24 | wm | ✅ Success | ✅ Success | ✅ Success |
 | wk28 | pilt-to-test | ✅ Success | ✅ Success | ✅ Success |
