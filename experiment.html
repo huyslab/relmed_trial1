@@ -58,6 +58,7 @@
         window.demo = window.participantID.includes("DEMO") | window.participantID.includes("STAF");
         window.azurePID = jsPsych.data.getURLVariable('azure_PID');
         window.session = jsPsych.data.getURLVariable('session');
+        window.session_week = parseInt((window.session || "").replace("wk", ""), 10); // NaN for non-week sessions, e.g. screening
         window.task = jsPsych.data.getURLVariable('task');
         window.last_state = jsPsych.data.getURLVariable('state') || "none";
         window.session_state = JSON.parse(jsPsych.data.getURLVariable('session_state') || "{}");
@@ -633,7 +634,7 @@
                 }
 
                 // Medication satisfaction from week 8 onwards
-                if (parseInt(window.session.replace("wk", "")) >= 8 &&
+                if (window.session_week >= 8 &&
                     resumptionRule(quests_order, window.last_state, "medication_satisfaction")) {
                     procedure = procedure.concat(medication_satisfaction_timeline);
                 }

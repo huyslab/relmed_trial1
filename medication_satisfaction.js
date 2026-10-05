@@ -7,7 +7,7 @@ const medication_satisfaction = {
     questions: () => [
         {
             // Up to and including week 8, participants are still receiving study pills
-            prompt: `<span class="highlight-txt">${parseInt(window.session.replace("wk", "")) <= 8 ?
+            prompt: `<span class="highlight-txt">${window.session_week <= 8 ?
                 "Overall, how satisfied are you with your RELMED study pills?" :
                 "Overall, how satisfied are you with the pills you started in the RELMED study?"}</span>`,
             labels: [
