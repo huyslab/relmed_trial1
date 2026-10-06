@@ -3,7 +3,7 @@ const medication_adherence = {
     css_classes: ['instructions'],
     stimulus: () => {
         // Up to and including week 8, participants are still receiving study pills
-        if (parseInt(window.session.replace("wk", "")) <= 8) {
+        if (window.session_week <= 8) {
             return `<p><span class="highlight-txt">In the past week, have you been taking your RELMED study pills?</span></p>`;
         }
 
