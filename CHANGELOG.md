@@ -1,3 +1,11 @@
+# [2.4.0](https://github.com/huyslab/relmed_trial1/compare/v2.3.0...v2.4.0) (2026-10-06)
+
+
+### Features
+
+* add relative mood change and medication satisfaction items ([c78af3c](https://github.com/huyslab/relmed_trial1/commit/c78af3cb20aa23d0b123170792195bf54d7c78a1))
+* add relative mood change and medication satisfaction items ([796c528](https://github.com/huyslab/relmed_trial1/commit/796c528284ffade861921b63c5e7f53892cadd44))
+
 # [2.3.0](https://github.com/huyslab/relmed_trial1/compare/v2.2.0...v2.3.0) (2026-10-05)
 
 
